@@ -1,0 +1,98 @@
+#tabelleinfos{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 200px;
+}
+#tankstellenuebersicht{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+#tankstellehinzufuegen{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+#fehlermeldung {
+    width: 70%;
+    min-height: 50px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    background-color: rgba(255, 0, 0, 0.4);
+}
+#fehlermeldungtitel {
+    text-align: center;
+    border-bottom: 2px solid #000;
+}
+#fehlermeldungmeldung {
+    text-align: center;
+}
+#erfolgmeldung {
+    width: 70%;
+    min-height: 50px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    background-color: rgba(0, 255, 0, 0.4);
+}
+#erfolgmeldungtitel {
+    text-align: center;
+    border-bottom: 2px solid #000;
+}
+#erfolgmeldungmeldung {
+    text-align: center;
+}
+.diagramm {
+    margin-left:auto;
+    margin-right: auto;
+    width: 95%;
+}
+.footer {
+    background-color: black;
+    height: 30px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+main{
+    margin-bottom: 30px;
+}
+html > body > footer > ul {
+    list-style: none;
+    margin: 0;
+    right: 10%;
+    position: absolute;
+}
+html > body > footer > ul > li{
+    float: left;
+    margin-left: 15px;
+}
+html > body > footer > ul > li > a {
+    color: #fff;
+    text-decoration: none;
+}
+html > body > footer > ul > li > a :visited{
+    color: #fff;
+}
+
+.bg {
+    background: url('../bg.jpg') no-repeat ;
+    width: 100%;
+    height: 95%;
+}
+.form-container {
+    border: 0px solid #fff;
+    padding: 50px 60px;
+    margin-top: 20vh;
+    -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+    box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+}
