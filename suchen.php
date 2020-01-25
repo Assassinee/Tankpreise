@@ -1,7 +1,7 @@
 <?php
 if($_SESSION['eingeloggt'] == true) {
 
-    if(isset($_POST['submitsuche'])) {
+    if(isset($_POST['submitsuche'])) {  // ausgewaehlte Tankstellen werden hinzugefuegt
 
         if(isset($_POST['tankstellenid'])) {
 
@@ -42,108 +42,96 @@ if($_SESSION['eingeloggt'] == true) {
             header('location: index.php?site=Einstellung');
         }
     }
-    elseif(isset($_POST['submit'])) {
+    elseif(isset($_POST['submit'])) {   //Seite mit Karte & Tankstellen wird angezeigt
 
-        $mysqli = new mysqli($dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass'], $dbConfig['Database']);
+        //include
+        require_once 'services/Services.php';
 
-        $sql = "SELECT TankstellenID From tankstellen";
-
-        $result = $mysqli->query($sql);
-
-        $row = $result->fetch_all();
-
-        $tankstellenVorhanden = Array();
-
-        for ($i = 1; $i < sizeof($row); $i++) {
-
-            $tankstellenVorhanden[] = $row[$i][0];
-        }
-
+        //Post
         $adresse = $_POST['adresse'];
         $stadt = $_POST['stadt'];
         $plz = $_POST['plz'];
         $radius = $_POST['radius'];
 
+        //Variablen
         $adressezusammen = $adresse . ', ' . $plz . ' ' . $stadt;
         $adresse = str_replace(' ', '%20', $adresse);
-        $icon = '';
+
+        $url = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $domain = substr($url, 0, strripos($url, '/'));
+
+        //DB
+        try {
+
+            $db = new PDO('mysql:dbname=' . $dbConfig['Database'] . ';host=' . $dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass']);
+        } catch (PDOException $e) {
+
+            echo $e->getMessage();
+            exit();
+        }
+
+        $sql = "SELECT TankstellenID From tankstellen";
+
+        $ergebnis = $db->query($sql);
+
+        $tankstellenVorhanden = Array();
+
+        foreach ($ergebnis as $zeile) {
+
+            $tankstellenVorhanden[] = $zeile['TankstellenID'];
+        }
 
         //Geocoding
-        $json = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=$adresse,$plz,$stadt&key=$apiKey[geocoding]");
+        $geocoding = $servicesGeocoding[$services['Geocoding']];
 
-        $data = json_decode($json, true);
+        $geocoding->setAddress($adresse, $stadt, $plz);
 
-        $lat = $data['results'][0]['geometry']['location']['lat'];
-        $lng = $data['results'][0]['geometry']['location']['lng'];
+        $geocoding->calculateCoordinates();
 
-        //Tabelle
-        $json = file_get_contents('https://creativecommons.tankerkoenig.de/json/list.php'
-            ."?lat=$lat"
-            ."&lng=$lng"
-            ."&rad=$radius"
-            ."&sort=dist"
-            ."&type=all"
-            ."&apikey=$apiKey[tankerkoenig]");
+        //Preise
+        $tankpreise = $servicesPrices[$services['Prices']];
 
-        $data = json_decode($json, true);
+        $tankpreise->setData($geocoding->getLat(), $geocoding->getLng(), $radius);
 
+        $data = $tankpreise->getPrices();
+
+        //Tabelle erstellen
         $tabelle = '<div style="margin-left: auto; margin-right: auto; width: 70%;">
                     <form action="' . $_SERVER['REQUEST_URI'] . '" method = "POST" target="_self" accept-charset="UTF-8">
                     <table class="table table-striped table-bordered table-hover">
                     <thead class="thead-dark"><tr><th>NR</th><th>TankstellenID</th><th>Name</th><th>Straße</th><th>Entfernung</th><th>hinzufügen</th></tr></thead>';
+
+        $map = $servicesMap[$services['Map']];
+
+        $map->setData($geocoding->getLat(), $geocoding->getLng(), $adressezusammen);
+
         $i = 1;
-        $markers = '';
-
-        foreach ($data['stations'] as $key => $value) {
-
-            $tankstellenadresse = $value['street'] . (($value['houseNumber'] != '') ? ' ' . $value['houseNumber'] : '') . ', ' . $value['place'];
-
-            $name = $_SERVER['SERVER_NAME'];
-            $pfad = $_SERVER['REQUEST_URI'];
-
-            $domain = $name . $pfad;
-            $ausgabe2 = substr($domain, 0, strripos($domain, '/'));
-
-            if (in_array($value['id'], $tankstellenVorhanden)) {
+        foreach ($data as $tankstelle)
+        {
+            if (in_array($tankstelle['id'], $tankstellenVorhanden)) {
 
                 $hinzufuegen = "bereits vorhanden";
-                $saule = 'https://' . $ausgabe2 . '/bilder/saule_vorhanden.png';
+                $saule = 'http://' . $domain . '/bilder/saule_vorhanden.png';
             } else {
 
-                $hinzufuegen = "<input type='checkbox' name='tankstellenid[]' value='$value[id]'";
-                $saule = 'https://' . $ausgabe2 . '/bilder/saule.png';
+                $hinzufuegen = "<input type='checkbox' name='tankstellenid[]' value='$tankstelle[id]'";
+                $saule = 'http://' . $domain . '/bilder/saule.png';
             }
 
-            $tabelle .= "<tr><td>$i</td><td>$value[id]</td><td>$value[name]</td><td>$tankstellenadresse</td><td>$value[dist]km</td><td>$hinzufuegen</td></tr>";
+            $tabelle .= '<tr><td>' . $i . '</td><td>' . $tankstelle['id'] . '</td><td>' . $tankstelle['name']
+                . '</td><td>' . $tankstelle['adresse'] . ' </td><td>' . $tankstelle['entfernung'] . 'km</td><td>'
+                . $hinzufuegen . '</td></tr>';
 
-            $markers .= "new google.maps.Marker({position: {lat: $value[lat], lng: $value[lng]}, map: map, title: '$i: $value[name]: $tankstellenadresse', icon: '$saule'});";
+            $map->addMarker($tankstelle['lat'], $tankstelle['lng'], $i . ':' . $tankstelle['name'] . ':' . $tankstelle['adresse'], $saule);
+
             $i++;
         }
 
         $tabelle .= '</table><button type="submit" name="submitsuche" class="btn btn-primary">hinzufügen</button></form></div>';
 
-        $map = "<div style='margin-left: auto; margin-right: auto; height: 50%; width: 70%;'><div style='height: 100%;' id=\"map\"></div></div>";
-        $jsMap = "<script>
-                    function initMap() {
-                      
-                        var map = new google.maps.Map(document.getElementById('map'), {
-                            center: {lat: $lat, lng: $lng},
-                            zoom: 15
-                        });
-                    
-                        new google.maps.Marker({
-                            position: {lat: $lat, lng: $lng},
-                            map: map,
-                            title: 'Angabe: $adressezusammen'
-                        });
-                        $markers;
-                    }
-                  </script>
-                  <script src=\"https://maps.googleapis.com/maps/api/js?key=$apiKey[mapsjavascript]&callback=initMap\" async defer></script>";
-
-        echo $map;
+        echo $map->getMap();
         echo $tabelle;
-        echo $jsMap;
+        echo $map->getJS();
 
     } else {
 
