@@ -1,9 +1,35 @@
 # Tankpreise
 
+Tankpreise ist ein Projekt um sie immer die aktuellen Benzienpreie anzeigen zu lassen. Es git zusätzlich Graphen um sich den Verlauf der Preise Grafisch anzeigen zu lassen. 
 
+## Getting Started
 
+### Prerequisites
 
+Um die Webanwendung selber zu benutzen benötigst du
 
+- Eine Datenbank deiner Wahl.
+- Einen Webserver der PHP unterstüzt.
+
+### Installing
+
+Lade das Reposetory einfach herunter und gehe auf die Startseite. Dann wirst du automatisch durch die Installation geführt.
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Authors
+
+* Maximilian Kosowski
+
+See also the list of [contributors](https://github.com/PurpleBooth/a-good-readme-template/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the [Attribution 4.0 International](LICENSE.md) Creative Commons License - see the [LICENSE.md](LICENSE.md) file for details
+
+-----
 ## Branch erstellen
 - `git cheackout -b NAME`
 
