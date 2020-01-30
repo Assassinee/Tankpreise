@@ -36,7 +36,7 @@ $startzeit = $letzteStunde - 6 * 60 * 60;
 
 foreach ($tankstellen as &$tk) {
 
-    $sql = 'SELECT Zeit, ' . $diagramm['benzinart'] . ' From preise where TankstellenID = :id and Status = "open" and Zeit >= :zeit';
+    $sql = 'SELECT Zeit, ' . $BENZINART . ' From preise where TankstellenID = :id and Status = "open" and Zeit >= :zeit';
 
     $kommando = $db->prepare($sql);
 
@@ -52,7 +52,7 @@ foreach ($tankstellen as &$tk) {
 
     while ($test = $kommando->fetch(PDO::FETCH_ASSOC)) {
 
-        $preis2[strtotime($test['Zeit'])] = $test['E5'];
+        $preis2[strtotime($test['Zeit'])] = $test[$BENZINART];
     }
 
     $tk['Preise'] = $preis2;

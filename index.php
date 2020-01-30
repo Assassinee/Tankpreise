@@ -22,8 +22,6 @@ if (isset($_COOKIE['benzinart']))
     $BENZINART = $diagramm['benzinart'];
 }
 
-print_r($BENZINART);
-
 if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
 
     $seite = 'login.php';
