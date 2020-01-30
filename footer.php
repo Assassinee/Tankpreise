@@ -1,6 +1,20 @@
 </main>
 <footer class="footer">
     <ul>
+        <li class="benzinart">
+            <a href="#">benzinart auswählen</a>
+            <ul>
+                <li>
+                    <a href="<?php echo $_SERVER['REQUEST_URI'] ?>&benzinart=E5">E5</a>
+                </li>
+                <li>
+                    <a href="<?php echo $_SERVER['REQUEST_URI'] ?>&benzinart=E10">E10</a>
+                </li>
+                <li>
+                    <a href="<?php echo $_SERVER['REQUEST_URI'] ?>&benzinart=Diesel">Diesel</a>
+                </li>
+            </ul>
+        </li>
         <li>
             <a href="index.php?site=info">info</a>
         </li>
