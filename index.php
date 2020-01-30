@@ -5,6 +5,25 @@ require_once('config.php');
 $seite = '';
 $webseittitel = '';
 
+if(isset($_GET['benzinart']))
+{
+    setcookie('benzinart', $_GET['benzinart'], time() + 60 * 60 * 24 * 7 * 4);
+
+    $url = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], 'benzinart=') - 1);
+
+    header("Location: $url");
+}
+
+if (isset($_COOKIE['benzinart']))
+{
+    $BENZINART = $_COOKIE['benzinart'];
+} else {
+
+    $BENZINART = $diagramm['benzinart'];
+}
+
+print_r($BENZINART);
+
 if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
 
     $seite = 'login.php';
@@ -13,7 +32,8 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
 
     $siteget = '';
 
-    if(isset($_GET['site'])) {
+    if(isset($_GET['site']))
+    {
         $siteget = $_GET['site'];
     }
 
@@ -46,6 +66,7 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
         case 'info':
             $seite = 'info.php';
             $webseittitel = 'Info';
+            break;
         default:
             $seite = 'info.php';
             $webseittitel = 'Info';
