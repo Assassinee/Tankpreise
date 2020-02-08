@@ -93,7 +93,7 @@ if($_SESSION['eingeloggt'] == true) {
 
         $tankpreise->setData($geocoding->getLat(), $geocoding->getLng(), $radius);
 
-        $data = $tankpreise->getPrices();
+        $data = $tankpreise->getStations();
 
         //Tabelle erstellen
         $tabelle = '<div style="margin-left: auto; margin-right: auto; width: 70%;">

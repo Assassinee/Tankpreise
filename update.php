@@ -1,45 +1,58 @@
 <?php
-require_once('config.php');
 
-$mysqli = new mysqli($dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass'], $dbConfig['Database']);
+require_once 'config.php';
+require_once 'services/Services.php';
 
-$sql = "SELECT TankstellenID From tankstellen";
+$aktuelleZeit = time();
 
-$statement = $mysqli->prepare($sql);
-$statement->execute();
-$result = $statement->get_result();
+try {
 
-$tankstellenids = '';
+    $db = new PDO($dbConfig['Typ'] . ':dbname=' . $dbConfig['Database'] . ';host=' . $dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass']);
+} catch (PDOException $e) {
 
-while($row = $result->fetch_object()) {
-
-    $tankstellenids .= $row->TankstellenID . ',';
+    echo $e->getMessage();
+    exit();
 }
 
-$tankstellenids = substr($tankstellenids, 0, -1);
+$sql = 'SELECT TankstellenID From tankstellen';
 
-$json = file_get_contents('https://creativecommons.tankerkoenig.de/json/prices.php'
-."?ids=$tankstellenids"
-."&apikey=$apiKey[tankerkoenig]");
+$ergebnis = $db->query($sql);
 
-$data = json_decode($json, true);
+$tankstellenID = Array();
 
-foreach ($data['prices'] as $key => $value) {
+foreach ($ergebnis as $zeile) {
+
+    $tankstellenID[] = $zeile['TankstellenID'];
+}
+
+$api = $servicesPrices[$services['Prices']];
+
+$preise = $api->getPrice($tankstellenID);
+
+foreach ($preise as $key => $value)
+{
+    $sql = 'insert into preise(TankstellenID, Zeit, Status, E5, E10, Diesel) values (:ID, :zeit, :status, :e5, :e10, :diesel)';
+
+    $kommando = $db->prepare($sql);
+
+    $id = $key;
+    $kommando->bindParam(':ID', $key);
+
+    $zeit = date('Y-m-d G:i:s', $aktuelleZeit);
+    $kommando->bindParam(':zeit', $zeit);
 
     $status = $value['status'];
-    $e5 = 0;
-    $e10 = 0;
-    $diesel = 0;
+    $kommando->bindParam(':status', $status);
 
-    if($status == 'open') {
+    $e5 = $value['e5'];
+    $kommando->bindParam(':e5', $e5);
 
-        $e5 = $value['e5'];
-        $e10 = $value['e10'];
-        $diesel = $value['diesel'];
-    }
+    $e10 = $value['e10'];
+    $kommando->bindParam(':e10', $e10);
 
-$sql = "insert into preise(TankstellenID, Status, E5, E10, Diesel) values('$key', '$status', $e5, $e10, $diesel)";
+    $diesel = $value['diesel'];
+    $kommando->bindParam(':diesel', $diesel);
 
-$mysqli->query($sql);
+    $kommando->execute();
 }
 ?>
