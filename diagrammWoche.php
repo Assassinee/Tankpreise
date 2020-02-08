@@ -1,110 +1,124 @@
 <?php
-$mysqli = new mysqli($dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass'], $dbConfig['Database']);
 
-$aktuellerTag = date('N');
-$tageVormonat = date('t', time() - ((date('j') + 1) * 86400));
 
-$jahr = date('Y');
-$monat = date('n');
-$tag = date('j');
 
-function tagumwandeln($tag) {
+$letzterTag = strtotime("today", time());
 
-    $ausgeschrieben = '';
+//DB
+try {
 
-    switch($tag) {
-        case 1:
-            $ausgeschrieben = 'Montag';
-            break;
-        case 2:
-            $ausgeschrieben = 'Dienstag';
-            break;
-        case 3:
-            $ausgeschrieben = 'Mittwoch';
-            break;
-        case 4:
-            $ausgeschrieben = 'Donnerstag';
-            break;
-        case 5:
-            $ausgeschrieben = 'Freitag';
-            break;
-        case 6:
-            $ausgeschrieben = 'Samstag';
-            break;
-        case 7:
-            $ausgeschrieben = 'Sonntag';
-            break;
-        default:
-            $ausgeschrieben = '';
-            break;
-    }
-    return $ausgeschrieben;
+    $db = new PDO($dbConfig['Typ'] . ':dbname=' . $dbConfig['Database'] . ';host=' . $dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass']);
+} catch (PDOException $e) {
+
+    echo $e->getMessage();
+    exit();
 }
 
-$sql = "Select TankstellenID, Name, Farbe From tankstellen";
+$sql = 'Select TankstellenID, Name, Farbe From tankstellen';
 
-$result = $mysqli->query($sql);
-
-$row = $result->fetch_row();
+$ergebnis = $db->query($sql);
 
 $tankstellen = Array();
-$tankstellenFarbe = Array();
 
-while ($row != null) {
+foreach ($ergebnis as $zeile) {
 
-    $tankstellen[$row[0]] = $row[1];
-    $tankstellenFarbe[$row[0]] = $row[2];
-    $row = $result->fetch_row();
+    $tankstelle = Array();
+
+    $tankstelle = [
+        'TankstellenID' => $zeile['TankstellenID'],
+        'Name' => $zeile['Name'],
+        'Farbe' => $zeile['Farbe'],
+        'Preise' => null
+    ];
+
+    $tankstellen[] = $tankstelle;
 }
 
-$datenset = '';
+$startzeit = $letzterTag - 7 * 24 * 60 * 60;
 
-$labels = "'" . tagumwandeln((($aktuellerTag - 6) < 0) ? ($aktuellerTag + 7) - 6 : $aktuellerTag - 6) . "', '" .
-    tagumwandeln((($aktuellerTag - 5) < 0) ? ($aktuellerTag + 7) - 5 : $aktuellerTag - 5) . "', '" .
-    tagumwandeln((($aktuellerTag - 4) < 0) ? ($aktuellerTag + 7) - 4 : $aktuellerTag - 4) . "', '" .
-    tagumwandeln((($aktuellerTag - 3) < 0) ? ($aktuellerTag + 7) - 3 : $aktuellerTag - 3) . "', '" .
-    tagumwandeln((($aktuellerTag - 2) < 0) ? ($aktuellerTag + 7) - 2 : $aktuellerTag - 2) . "', '" .
-    tagumwandeln((($aktuellerTag - 1) < 0) ? ($aktuellerTag + 7) - 1 : $aktuellerTag - 1) . "', '" .
-    tagumwandeln($aktuellerTag) . "'";
+foreach ($tankstellen as &$tk) {
 
-foreach ($tankstellen as $key => $value) {
+    $sql = 'SELECT Zeit, ' . $BENZINART . ' From preise where TankstellenID = :id and Status = "open" and Zeit >= :zeit';
 
-    $preise = '';
+    $kommando = $db->prepare($sql);
 
-    for($i = 6; $i >= 0; $i--) {
+    $id = $tk['TankstellenID'];
+    $kommando->bindParam(':id', $id);
 
-        $abfragetag = ($tag - ($i + 1)) < 1 ? (($tag - ($i + 1)) + $tageVormonat) : ($tag - ($i + 1));
-        $abfragemonat = ($tag - ($i + 1)) < 1 ? ($monat - 1) < 1 ? 12 : $monat - 1 : $monat;
-        $abfragejahr = ($monat - 1) < 1 ? $jahr - 1 : $jahr;
+    $zeit = date('o-n-j H:i:s', $startzeit);
+    $kommando->bindParam(':zeit', $zeit);
 
-        $von = "$jahr-$abfragemonat-" . $abfragetag . " 00:00:00";
-        $bis = "$jahr-$abfragemonat-" . $abfragetag . " 23:59:59";
+    $kommando->execute();
 
-        $sql = "SELECT min($diagramm[benzinart])
-        From preise
-        Where TankstellenID = '$key' and Status = 'open'
-        And Zeit between '$von' and '$bis'";
+    $preis2 = Array();
 
-        $result = $mysqli->query($sql);
+    while ($test = $kommando->fetch(PDO::FETCH_ASSOC)) {
 
-        $row = $result->fetch_row();
-
-        $aktuellerpreis = $row[0];
-
-        $preise .= $aktuellerpreis . ',';
+        $preis2[strtotime($test['Zeit'])] = $test[$BENZINART];
     }
 
-    $preise = substr($preise, 0, -1);
+    $tk['Preise'] = $preis2;
+}
 
-    $datenset .= "{ label: '$value',
-        backgroundColor: 'rgba($tankstellenFarbe[$key],$diagramm[Farbstaerkeflaeche])',
-        borderColor: 'rgba($tankstellenFarbe[$key],$diagramm[FarbstaerkeLinie])',
-        data: [$preise]
+unset($tk);
+
+$tankpreise = Array();
+
+foreach ($tankstellen as $tk)
+{
+    foreach ($tk['Preise'] as $key => $value)
+    {
+        $tankpreise[$key][$tk['TankstellenID']] = $value;
+    }
+}
+
+ksort($tankpreise);
+
+//print_r($tankpreise);
+
+
+
+
+
+
+
+unset($key, $value);
+
+$datenset = "";
+
+foreach ($tankstellen as $tanke)
+{
+    $preisString = '';
+
+    foreach ($tankpreise as $zeitpunkt) {
+        $test = null;
+        foreach ($zeitpunkt as $key => $value) {
+            if ($key == $tanke['TankstellenID']) {
+                $test = $value;
+            }
+        }
+        $preisString .= $test == null ? null : $test;
+        $preisString .= ',';
+    }
+
+    $preisString = substr($preisString, 0, -1);
+
+    $datenset .= "{ label: '$tanke[Name]',
+        backgroundColor: 'rgba($tanke[Farbe],$diagramm[Farbstaerkeflaeche])',
+        borderColor: 'rgba($tanke[Farbe],$diagramm[FarbstaerkeLinie])',
+        data: [$preisString]
     },";
 }
-$datenset = substr($datenset, 0, -1);
+
+$labels = '';
+
+foreach ($tankpreise as $preise => $value)
+{
+    $temp = date('d.m.Y G:i', $preise);
+    $labels .= "'$temp',";
+}
 ?>
-<div class="diagramm">
+<div class="Diagramm">
     <canvas id="myChart"></canvas>
     <script src="js/Chart.js"></script>
     <script>
@@ -115,6 +129,11 @@ $datenset = substr($datenset, 0, -1);
             data: {
                 labels: [<?php echo $labels; ?>],
                 datasets: [<?php echo $datenset; ?>]
+            },
+            options: {
+                animation: {
+                    duration: 2000
+                }
             }
         });
     </script>

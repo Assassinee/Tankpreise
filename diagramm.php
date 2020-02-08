@@ -1,7 +1,5 @@
 <?php
 
-$letzteStunde = time() - (time() / 60 % 60) * 60 - (time() % 60);
-
 //DB
 try {
 
@@ -32,8 +30,6 @@ foreach ($ergebnis as $zeile) {
     $tankstellen[] = $tankstelle;
 }
 
-$startzeit = $letzteStunde - 6 * 60 * 60;
-
 foreach ($tankstellen as &$tk) {
 
     $sql = 'SELECT Zeit, ' . $BENZINART . ' From preise where TankstellenID = :id and Status = "open" and Zeit >= :zeit';
@@ -43,34 +39,38 @@ foreach ($tankstellen as &$tk) {
     $id = $tk['TankstellenID'];
     $kommando->bindParam(':id', $id);
 
-    $zeit = date('o-n-j H:i:s', $startzeit);
+    $lastcomphour = time() - (time() % 3600);
+    $abfragezeit = $lastcomphour - (6 * 60 * 60);
+    $zeit = date('o-n-j H:i:s', $abfragezeit);
     $kommando->bindParam(':zeit', $zeit);
 
     $kommando->execute();
 
-    $preis2 = Array();
+    $preis = Array();
 
     while ($test = $kommando->fetch(PDO::FETCH_ASSOC)) {
 
-        $preis2[strtotime($test['Zeit'])] = $test[$BENZINART];
+        $preis[strtotime($test['Zeit'])] = $test[$BENZINART];
     }
 
-    $tk['Preise'] = $preis2;
+    $tk['Preise'] = $preis;
 }
 
 unset($tk);
 
-$tankpreise = Array();
+$tankstellenpreise = Array();
 
 foreach ($tankstellen as $tk)
 {
     foreach ($tk['Preise'] as $key => $value)
     {
-        $tankpreise[$key][$tk['TankstellenID']] = $value;
+        $tankstellenpreise[$key][$tk['TankstellenID']] = $value;
     }
 }
 
-ksort($tankpreise);
+ksort($tankstellenpreise);
+
+print_r($tankstellenpreise);
 
 unset($key, $value);
 
@@ -80,7 +80,7 @@ foreach ($tankstellen as $tanke)
 {
     $preisString = '';
 
-    foreach ($tankpreise as $zeitpunkt) {
+    foreach ($tankstellenpreise as $zeitpunkt) {
         $test = null;
         foreach ($zeitpunkt as $key => $value) {
             if ($key == $tanke['TankstellenID']) {
@@ -102,11 +102,12 @@ foreach ($tankstellen as $tanke)
 
 $labels = '';
 
-foreach ($tankpreise as $preise => $value)
+foreach ($tankstellenpreise as $preise => $value)
 {
     $temp = date('G:i', $preise);
     $labels .= "'$temp',";
 }
+$labels = substr($labels, 0, -1);
 ?>
 <div class="Diagramm">
     <canvas id="myChart"></canvas>
