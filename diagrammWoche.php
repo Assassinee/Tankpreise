@@ -50,14 +50,13 @@ foreach ($tankstellen as &$tk) {
 
     $kommando->execute();
 
-    $preis2 = Array();
+    $preis = Array();
 
     while ($test = $kommando->fetch(PDO::FETCH_ASSOC)) {
 
-        $preis2[strtotime($test['Zeit'])] = $test[$BENZINART];
+        $preis[strtotime($test['Zeit'])] = $test[$BENZINART];
     }
-
-    $tk['Preise'] = $preis2;
+    $tk['Preise'] = $preis;
 }
 
 unset($tk);
@@ -74,11 +73,47 @@ foreach ($tankstellen as $tk)
 
 ksort($tankpreise);
 
-//print_r($tankpreise);
 
 
 
 
+foreach ($tankstelle as $key => $value)
+{
+    foreach ($tankpreise as $key2 => $value2)
+    {
+
+    }
+}
+
+
+
+
+/*
+$anzahlZusammen = 12; //zwei Stunden
+
+foreach ($tankstellen as $key => $value)
+{
+    $preisezusammengefasst = Array();
+    $anzahl = 0;
+    $tempPreis = 0;
+    $tempTime = 0;
+
+    foreach ($value['Preise'] as $key2 => $value2)
+    {
+        if ($anzahl == $anzahlZusammen)
+        {
+            $preisezusammengefasst[$tempTime] = round(($tempPreis / $anzahl), 3);
+            $tempTime = 0;
+            $tempPreis = 0;
+            $anzahl = 0;
+        }
+
+        $tempPreis += $value2;
+        $anzahl++;
+        $tempTime = $tempTime == 0 ? $key2 : $tempTime;
+    }
+}
+*/
 
 
 
