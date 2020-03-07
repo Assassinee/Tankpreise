@@ -1,47 +1,42 @@
 # Tankpreise
 
-Tankpreise ist ein Projekt um sie immer die aktuellen Benzienpreie anzeigen zu lassen. Es git zusätzlich Graphen um sich den Verlauf der Preise Grafisch anzeigen zu lassen. 
+Tankpreise ist ein Projekt, um sich immer die aktuellen Benzinpreise anzeigen zu lassen. Es gibt zusätzlich Graphen, um sich den Verlauf der Preise Grafisch anzeigen zu lassen. 
 
-## Getting Started
+## Beginnen
 
-### Prerequisites
+### Voraussetzungen:
 
-Um die Webanwendung selber zu benutzen benötigst du
+Um die Webanwendung selber zu benutzen benötigst du:
 
-- Eine Datenbank deiner Wahl.
-- Einen Webserver der PHP unterstüzt.
+- Eine Datenbank deiner Wahl
+- Einen Webserver mit PHP
+- API-Key's für die eingebundenen Dienste
 
-### Installing
+### Installation
 
-Lade das Reposetory einfach herunter und gehe auf die Startseite. Dann wirst du automatisch durch die Installation geführt.
+Lade dir den letzten [Release](https://github.com/Assassinee/Tankpreise/releases/latest) herunter und kopiere die Daten auf deinen Webserver. Bei dem ersten aufrufen der Webanwendung wirst du automatisch durch den Einrichtungsprozess  geführt.
 
-## Contributing
+[direkter Download](https://github.com/Assassinee/Tankpreise/releases/latest/download/asset-name.zip)
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+### Dienste:
+Aktuell werden folgende Dienste von dieser Webanwendung unterstützt.
 
-## Authors
+#### Karte:
+Wird für die Anzeige der Tankstellen auf einer Karte benötigt.
+- Google Maps
 
-* Maximilian Kosowski
+#### Geocoding:
+Wird für die Übersetzung von einer Adresse in Koordinaten benötigt.
+- Google Geocoding
 
-See also the list of [contributors](https://github.com/PurpleBooth/a-good-readme-template/contributors) who participated in this project.
+#### Benzindaten:
+Wird für die Abfrage der Benzinpreise benötigt.
+- Tankerkoenig
 
-## License
+## Autor
 
-This project is licensed under the [Attribution 4.0 International](LICENSE.md) Creative Commons License - see the [LICENSE.md](LICENSE.md) file for details
+* [Maximilian Kosowski (Assassinee)](https://github.com/Assassinee)
 
------
-## Branch erstellen
-- `git cheackout -b NAME`
+## Lizenz
 
-## How to rebase
-1. Den Master auschecken: `git checkout master`
-2. Den aktuellen Master vom Server ziehen: `git pull`
-3. Zurück in deinen aktuellen Branch wechseln `git checkout feature/XXX`
-4. Deine aktuellen Commits alle auf ein Commit zurücksetzen mit: `git reset $(git merge-base master feature/XXX)`
-5. Alle Änderungen in einen Commit packen: `git add . && git commit -m 'one commit'`
-6. Rebasen `git rebase master`
-7. In Webstorm unter VCS -> Git -> Resolve Conflicts die Merge Konflike beheben
-8. Wenn die Konflikte behoben sind im Terminal `git rebase --continue` eingeben
-9. Deine aktuellen Commits erneut alle auf ein Commit zurücksetzen mit: `git reset $(git merge-base master feature/XXX)`
-10. Alle Änderungen in einen Commit packen: `git add . && git commit -m 'one commit'`
-11. Dann sollte das grundsätzlich funktionieren. 
+Dieses Projekt verwendet die [GNU AGPLv3](LICENSE.md) GNU Affero General Public License v3.0 - schau dir die [LICENSE.md](LICENSE.md) Datei für mehr Details an.
