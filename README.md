@@ -2,6 +2,23 @@
 
 Tankpreise ist ein Projekt, um sich immer die aktuellen Benzinpreise anzeigen zu lassen. Es gibt zusätzlich Graphen, um sich den Verlauf der Preise Grafisch anzeigen zu lassen. 
 
+
+## Screenshots
+
+<table>
+    <tr>
+        <td>
+            <img alt="Diagramm" src="Screenshots/Diagramm.png">
+        </td>
+        <td>
+            <img alt="Tankstellensuche" src="Screenshots/Tankstellensuche.png">
+        </td>
+        <td>
+            <img alt="Einstellungen" src="Screenshots/Einstellungen.png">
+        </td>
+    </tr>
+</table>
+
 ## Beginnen
 
 ### Voraussetzungen:
