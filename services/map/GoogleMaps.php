@@ -50,6 +50,6 @@ class GoogleMaps implements Map
                         $this->markers;
                     }
                   </script>
-                  <script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyD-33FyuxUWbgTV2BEYRIlH-71IsIveOyQ&callback=initMap\" async defer></script>";
+                  <script src=\"https://maps.googleapis.com/maps/api/js?key=" . $this->apiKey . "&callback=initMap\" async defer></script>";
     }
 }
