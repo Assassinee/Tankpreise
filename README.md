@@ -6,7 +6,6 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/Assassinee/Tankpreise)
 ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/Assassinee/Tankpreise)
 
----
 Tankpreise ist ein Projekt, um sich immer die aktuellen Benzinpreise anzeigen zu lassen. Es gibt zusätzlich Graphen, um sich den Verlauf der Preise Grafisch anzeigen zu lassen.
 
 ## Screenshots
