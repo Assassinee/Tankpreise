@@ -47,4 +47,4 @@ Wird für die Abfrage der Benzinpreise benötigt.
 - [Maximilian Kosowski (Assassinee)](https://github.com/Assassinee)
 
 ## Lizenz
-Dieses Projekt verwendet die [GNU AGPLv3](LICENSE.md) GNU Affero General Public License v3.0 - schau dir die [LICENSE.md](LICENSE.md) Datei für mehr Details an.
+Dieses Projekt verwendet die [GNU AGPLv3](LICENSE) GNU Affero General Public License v3.0 - schau dir die [LICENSE.md](LICENSE) Datei für mehr Details an.
