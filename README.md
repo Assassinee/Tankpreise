@@ -1,5 +1,19 @@
 # Tankpreise
-Tankpreise ist ein Projekt, um sich immer die aktuellen Benzinpreise anzeigen zu lassen. Es gibt zusätzlich Graphen, um sich den Verlauf der Preise Grafisch anzeigen zu lassen. 
+Tankpreise ist ein Projekt, um sich immer die aktuellen Benzinpreise anzeigen zu lassen. Es gibt zusätzlich Graphen, um sich den Verlauf der Preise Grafisch anzeigen zu lassen.
+
+Badge | Status
+--- | ---
+test | ![GitHub language count](https://img.shields.io/github/languages/count/Assassinee/Tankpreise)
+test | ![GitHub All Releases](https://img.shields.io/github/downloads/Assassinee/Tankpreise/total)
+test | ![GitHub issues](https://img.shields.io/github/issues/Assassinee/Tankpreise)
+test | ![GitHub closed issues](https://img.shields.io/github/issues-closed/Assassinee/Tankpreise)
+test | ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Assassinee/Tankpreise)
+test | ![GitHub](https://img.shields.io/github/license/Assassinee/Tankpreise)
+test | ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Assassinee/Tankpreise?include_prereleases)
+test | ![GitHub contributors](https://img.shields.io/github/contributors-anon/Assassinee/Tankpreise)
+test | ![GitHub last commit](https://img.shields.io/github/last-commit/Assassinee/Tankpreise)
+test | ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/Assassinee/Tankpreise)
+---
 
 ## Screenshots
 <table>
