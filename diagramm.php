@@ -70,8 +70,6 @@ foreach ($tankstellen as $tk)
 
 ksort($tankstellenpreise);
 
-print_r($tankstellenpreise);
-
 unset($key, $value);
 
 $datenset = "";
