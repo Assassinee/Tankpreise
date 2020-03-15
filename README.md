@@ -1,5 +1,12 @@
 # Tankpreise
-Tankpreise ist ein Projekt, um sich immer die aktuellen Benzinpreise anzeigen zu lassen. Es gibt zusätzlich Graphen, um sich den Verlauf der Preise Grafisch anzeigen zu lassen. 
+
+![GitHub](https://img.shields.io/github/license/Assassinee/Tankpreise)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Assassinee/Tankpreise?include_prereleases)
+![GitHub All Releases](https://img.shields.io/github/downloads/Assassinee/Tankpreise/total)
+![GitHub last commit](https://img.shields.io/github/last-commit/Assassinee/Tankpreise)
+![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/Assassinee/Tankpreise)
+
+Tankpreise ist ein Projekt, um sich immer die aktuellen Benzinpreise anzeigen zu lassen. Es gibt zusätzlich Graphen, um sich den Verlauf der Preise Grafisch anzeigen zu lassen.
 
 ## Screenshots
 <table>
@@ -42,6 +49,13 @@ Wird für die Übersetzung von einer Adresse in Koordinaten benötigt.
 ### Benzindaten:
 Wird für die Abfrage der Benzinpreise benötigt.
 - [Tankerkoenig](https://creativecommons.tankerkoenig.de/)
+
+## Entwicklung
+![GitHub issues](https://img.shields.io/github/issues/Assassinee/Tankpreise)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/Assassinee/Tankpreise)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Assassinee/Tankpreise)
+
+Wenn du eine gute Idee für die Webanwenung hast, hilf gerne bei der Entwicklung mit.
 
 ## Autor
 - [Maximilian Kosowski (Assassinee)](https://github.com/Assassinee)
