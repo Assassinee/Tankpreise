@@ -50,14 +50,15 @@ Wird für die Übersetzung von einer Adresse in Koordinaten benötigt.
 Wird für die Abfrage der Benzinpreise benötigt.
 - [Tankerkoenig](https://creativecommons.tankerkoenig.de/)
 
+## Entwicklung
+![GitHub issues](https://img.shields.io/github/issues/Assassinee/Tankpreise)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/Assassinee/Tankpreise)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Assassinee/Tankpreise)
+
+Wenn du eine gute Idee für die Webanwenung hast, hilf gerne bei der Entwicklung mit.
+
 ## Autor
 - [Maximilian Kosowski (Assassinee)](https://github.com/Assassinee)
 
 ## Lizenz
 Dieses Projekt verwendet die [GNU AGPLv3](LICENSE) GNU Affero General Public License v3.0 - schau dir die [LICENSE.md](LICENSE) Datei für mehr Details an.
-
-
-entwicklung:
-![GitHub issues](https://img.shields.io/github/issues/Assassinee/Tankpreise)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/Assassinee/Tankpreise)
-![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Assassinee/Tankpreise)
