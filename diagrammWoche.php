@@ -1,7 +1,4 @@
 <?php
-
-
-
 $letzterTag = strtotime("today", time());
 
 //DB
@@ -77,49 +74,80 @@ foreach ($tankstellen as $key => &$value)
 
 
 
+$zeitsprung = 60 * 60 * 8;
 
-$anzahlZusammen = 12; //eine Stunden => 6
+foreach ($tankstellen as $key => &$value) {
 
-foreach ($tankstellen as $key => &$value)
-{
     $preisezusammengefasst = Array();
-    $anzahl = 0;
+    $anfangszeit = $startzeit;
+    $endzeit = $startzeit + $zeitsprung;
     $preis = 0;
-    $zeit = 0;
-    $anzahlkomplett = 0;
 
-    foreach ($value['Preise'] as $key2 => $value2)
-    {
-        if ($value2 != NULL) {
+    foreach ($value['Preise'] as $key2 => $value2) {
 
-            $preis += $value2;
-            $anzahl++;
+        if ($key2 >= $anfangszeit && $key2 < $endzeit) {
+
+            $preis = (($value2 < $preis) ? $value2 : (($preis == 0) ? $value2: $preis));
+        } else {
+
+            $preisezusammengefasst[$anfangszeit] = $preis;
+
+            $preis = $value2;
+            $anfangszeit = $endzeit;
+            $endzeit += $zeitsprung;
         }
-        $zeit = $zeit == 0 ? $key2 : $zeit;
-        $anzahlkomplett++;
 
-        if ($anzahlkomplett == $anzahlZusammen) {
 
-            if ($anzahl != 0) {
-
-                $preisezusammengefasst[$zeit] = round(($preis / $anzahl), 3);
-            }
-
-            $zeit = 0;
-            $preis = 0;
-            $anzahl = 0;
-            $anzahlkomplett = 0;
-        }
     }
 
-
     $value['Preise'] = $preisezusammengefasst;
-    //print_r($preisezusammengefasst);
+
+
+}
+
+unset($key, $value);
+
+foreach ($tankstellen[0]['Preise'] as $key => $value) {
+
+    echo date('d.m.Y G:i:s', $key) . ' == ' . ($value == null ? 'NULL' : $value) . '<br/>';
 }
 
 
 
-//print_r($tankstellen);
+unset($key, $value);
+
+
+
+
+
+//$anzahlZusammen = 37; //eine Stunden => 6
+//
+//foreach ($tankstellen as $key => &$value) {
+//
+//    $preisezusammengefasst = Array();
+//    $preis = 0;
+//    $zeit = 0;
+//    $anzahl = 0;
+//
+//    foreach ($value['Preise'] as $key2 => $value2) {
+//
+//        if ($value != NULL) {
+//
+//            $preis = $preis > $value2 ? $value2 : $preis == 0 ? $value2 : $preis;
+//        }
+//        $zeit = $zeit == 0 ? $key2 : $zeit;
+//        $anzahl++;
+//
+//        if ($anzahl == $anzahlZusammen) {
+//
+//            $preisezusammengefasst[$zeit] = $preis;
+//            $preis = 0;
+//            $zeit = 0;
+//            $anzahl = 0;
+//        }
+//    }
+//    $value['Preise'] = $preisezusammengefasst;
+//}
 
 
 
