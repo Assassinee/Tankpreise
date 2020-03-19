@@ -66,15 +66,13 @@ foreach ($tankstellen as $key => &$value)
     {
         if (!key_exists($key2, $value['Preise']))
         {
-            $value['Preise'][$key2] = null;
+            $value['Preise'][$key2] = 0;
         }
     }
     ksort($value['Preise']);
 }
 
-
-
-$zeitsprung = 60 * 60 * 8;
+$zeitsprung = 60 * 60 * 12; //Angabe wie viele Stunden zusammengefasst werden.
 
 foreach ($tankstellen as $key => &$value) {
 
@@ -85,72 +83,34 @@ foreach ($tankstellen as $key => &$value) {
 
     foreach ($value['Preise'] as $key2 => $value2) {
 
-        if ($key2 >= $anfangszeit && $key2 < $endzeit) {
-
-            $preis = (($value2 < $preis) ? $value2 : (($preis == 0) ? $value2: $preis));
-        } else {
+        if ($key2 >= $endzeit) {
 
             $preisezusammengefasst[$anfangszeit] = $preis;
-
-            $preis = $value2;
+            $preis = 0;
             $anfangszeit = $endzeit;
             $endzeit += $zeitsprung;
         }
 
+        if ($value2 < $preis) {
 
+            if ($value2 != 0) {
+
+                $preis = $value2;
+            }
+        } else {
+
+            if ($preis == 0) {
+
+                if ($value2 != 0) {
+
+                    $preis = $value2;
+                }
+            }
+        }
     }
 
     $value['Preise'] = $preisezusammengefasst;
-
-
 }
-
-unset($key, $value);
-
-foreach ($tankstellen[0]['Preise'] as $key => $value) {
-
-    echo date('d.m.Y G:i:s', $key) . ' == ' . ($value == null ? 'NULL' : $value) . '<br/>';
-}
-
-
-
-unset($key, $value);
-
-
-
-
-
-//$anzahlZusammen = 37; //eine Stunden => 6
-//
-//foreach ($tankstellen as $key => &$value) {
-//
-//    $preisezusammengefasst = Array();
-//    $preis = 0;
-//    $zeit = 0;
-//    $anzahl = 0;
-//
-//    foreach ($value['Preise'] as $key2 => $value2) {
-//
-//        if ($value != NULL) {
-//
-//            $preis = $preis > $value2 ? $value2 : $preis == 0 ? $value2 : $preis;
-//        }
-//        $zeit = $zeit == 0 ? $key2 : $zeit;
-//        $anzahl++;
-//
-//        if ($anzahl == $anzahlZusammen) {
-//
-//            $preisezusammengefasst[$zeit] = $preis;
-//            $preis = 0;
-//            $zeit = 0;
-//            $anzahl = 0;
-//        }
-//    }
-//    $value['Preise'] = $preisezusammengefasst;
-//}
-
-
-
 
 $tankpreise = Array();
 unset($key, $value);
@@ -163,51 +123,9 @@ foreach ($tankstellen as $key => $value)
     }
 }
 
-
-
-
-
 ksort($tankpreise);
 
-
-//print_r($tankpreise);
-
-
-
-/*
-$anzahlZusammen = 12; //zwei Stunden
-
-foreach ($tankstellen as $key => $value)
-{
-    $preisezusammengefasst = Array();
-    $anzahl = 0;
-    $tempPreis = 0;
-    $tempTime = 0;
-
-    foreach ($value['Preise'] as $key2 => $value2)
-    {
-        if ($anzahl == $anzahlZusammen)
-        {
-            $preisezusammengefasst[$tempTime] = round(($tempPreis / $anzahl), 3);
-            $tempTime = 0;
-            $tempPreis = 0;
-            $anzahl = 0;
-        }
-
-        $tempPreis += $value2;
-        $anzahl++;
-        $tempTime = $tempTime == 0 ? $key2 : $tempTime;
-    }
-}
-*/
-
-
-
-unset($key, $value);
-
 $datenset = "";
-
-
 
 foreach ($tankstellen as $tanke)
 {
