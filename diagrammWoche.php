@@ -1,7 +1,4 @@
 <?php
-
-
-
 $letzterTag = strtotime("today", time());
 
 //DB
@@ -35,6 +32,7 @@ foreach ($ergebnis as $zeile) {
 }
 
 $startzeit = $letzterTag - 7 * 24 * 60 * 60;
+$preiszeiten = array();
 
 foreach ($tankstellen as &$tk) {
 
@@ -50,39 +48,82 @@ foreach ($tankstellen as &$tk) {
 
     $kommando->execute();
 
-    $preis2 = Array();
+    $preis = Array();
 
     while ($test = $kommando->fetch(PDO::FETCH_ASSOC)) {
 
-        $preis2[strtotime($test['Zeit'])] = $test[$BENZINART];
+        $preis[strtotime($test['Zeit'])] = $test[$BENZINART];
+        $preiszeiten[strtotime($test['Zeit'])] = null;
     }
-
-    $tk['Preise'] = $preis2;
+    $tk['Preise'] = $preis;
 }
 
-unset($tk);
+ksort($preiszeiten);
+
+foreach ($tankstellen as $key => &$value)
+{
+    foreach ($preiszeiten as $key2 => $value2)
+    {
+        if (!key_exists($key2, $value['Preise']))
+        {
+            $value['Preise'][$key2] = 0;
+        }
+    }
+    ksort($value['Preise']);
+}
+
+$zeitsprung = 60 * 60 * 12; //Angabe wie viele Stunden zusammengefasst werden.
+
+foreach ($tankstellen as $key => &$value) {
+
+    $preisezusammengefasst = Array();
+    $anfangszeit = $startzeit;
+    $endzeit = $startzeit + $zeitsprung;
+    $preis = 0;
+
+    foreach ($value['Preise'] as $key2 => $value2) {
+
+        if ($key2 >= $endzeit) {
+
+            $preisezusammengefasst[$anfangszeit] = $preis;
+            $preis = 0;
+            $anfangszeit = $endzeit;
+            $endzeit += $zeitsprung;
+        }
+
+        if ($value2 < $preis) {
+
+            if ($value2 != 0) {
+
+                $preis = $value2;
+            }
+        } else {
+
+            if ($preis == 0) {
+
+                if ($value2 != 0) {
+
+                    $preis = $value2;
+                }
+            }
+        }
+    }
+
+    $value['Preise'] = $preisezusammengefasst;
+}
 
 $tankpreise = Array();
+unset($key, $value);
 
-foreach ($tankstellen as $tk)
+foreach ($tankstellen as $key => $value)
 {
-    foreach ($tk['Preise'] as $key => $value)
+    foreach ($value['Preise'] as $key2 => $value2)
     {
-        $tankpreise[$key][$tk['TankstellenID']] = $value;
+        $tankpreise[$key2][$value['TankstellenID']] = $value2;
     }
 }
 
 ksort($tankpreise);
-
-//print_r($tankpreise);
-
-
-
-
-
-
-
-unset($key, $value);
 
 $datenset = "";
 
