@@ -2,7 +2,7 @@
 <footer class="footer">
     <ul>
         <li class="benzinart">
-            <a href="#">benzinart auswählen</a>
+            <a href="#">Benzinart: <?php echo $BENZINART; ?></a>
             <ul>
                 <li>
                     <a href="<?php echo $_SERVER['REQUEST_URI'] ?>&benzinart=E5">E5</a>
