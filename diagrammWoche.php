@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 $letzterTag = strtotime("today", time());
 
 //DB
@@ -72,7 +74,7 @@ foreach ($tankstellen as $key => &$value)
     ksort($value['Preise']);
 }
 
-$zeitsprung = 60 * 60 * 12; //Angabe wie viele Stunden zusammengefasst werden.
+$zeitsprung = 60 * 60 * $diagramm['Stundenzusammenfassen']; //Angabe wie viele Stunden zusammengefasst werden.
 
 foreach ($tankstellen as $key => &$value) {
 
