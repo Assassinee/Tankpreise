@@ -84,10 +84,13 @@ html > body > footer > ul > li > a :visited{
 }
 
 .bg {
-    background: url('../bg.jpg') no-repeat ;
+    height: 100%;
     width: 100%;
-    height: 95%;
+    background-image: url("http://192.168.64.30/tankpreise/bilder/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
 .form-container {
     border: 0px solid #fff;
     padding: 50px 60px;
