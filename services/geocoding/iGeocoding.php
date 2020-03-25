@@ -14,23 +14,23 @@ interface Geocoding
      * @param $plz is the post code.
      * @return mixed
      */
-    public function setAddress($address, $city, $postCode);
+    public function setAddress($address, $city, $postCode): void;
 
     /**
      * calculate the Coordinates. returns true if it was successful.
-     * @return boolean
+     * @return bool
      */
-    public function calculateCoordinates();
+    public function calculateCoordinates(): bool;
 
     /**
-     * returns the latitude
-     * @return mixed
+     * returns the latitude.
+     * @return float|null
      */
-    public function getLat();
+    public function getLat(): ?float;
 
     /**
      * returns the longitude.
-     * @return mixed
+     * @return float|null
      */
-    public function getLng();
+    public function getLng(): ?float;
 }

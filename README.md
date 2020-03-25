@@ -27,7 +27,7 @@ Tankpreise ist ein Projekt, um sich immer die aktuellen Benzinpreise anzeigen zu
 Um die Webanwendung selber zu benutzen benötigst du:
 
 - Eine Datenbank deiner Wahl
-- Einen Webserver mit PHP
+- Einen Webserver mit PHP 7.1
 - API-Key's für die eingebundenen Dienste
 
 ## Installation

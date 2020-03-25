@@ -37,12 +37,12 @@ class GoogleGeocoding implements Geocoding
         return $data != null;
     }
 
-    public function getLat()
+    public function getLat(): ?float
     {
         return $this->lat;
     }
 
-    public function getLng()
+    public function getLng(): ?float
     {
         return $this->lng;
     }
