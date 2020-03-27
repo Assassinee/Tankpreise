@@ -16,14 +16,14 @@ class GoogleGeocoding implements Geocoding
         $this->apiKey = $apiKey;
     }
 
-    public function setAddress($addres, $city, $postCode)
+    public function setAddress($address, $city, $postCode): void
     {
-        $this->addres = $addres;
+        $this->addres = $address;
         $this->city = $city;
         $this->postCode = $postCode;
     }
 
-    public function calculateCoordinates()
+    public function calculateCoordinates(): bool
     {
         $json = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json"
             . "?address=$this->addres,$this->postCode,$this->city"
