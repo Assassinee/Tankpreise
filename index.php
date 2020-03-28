@@ -38,35 +38,35 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
     switch ($siteget) {
 
         case 'Diagramm':
-            $seite = 'diagramm.php';
+            $seite = 'screens/diagramm.php';
             $webseittitel = 'Diagramm';
             break;
         case 'DiagrammWoche':
-            $seite = 'diagrammWoche.php';
+            $seite = 'screens/diagrammWoche.php';
             $webseittitel = 'DiagrammWoche';
             break;
         case 'Einstellung':
-            $seite = 'einstellungen.php';
+            $seite = 'screens/einstellungen.php';
             $webseittitel = 'Einstellung';
             break;
         case 'suchen':
-            $seite = 'suchen.php';
+            $seite = 'screens/suchen.php';
             $webseittitel = 'Tankstelle suchen';
             break;
         case 'bearbeiten':
-            $seite = 'bearbeiten.php';
+            $seite = 'screens/bearbeiten.php';
             $webseittitel = 'bearbeiten';
             break;
         case 'loeschen':
-            $seite = 'loeschen.php';
+            $seite = 'screens/loeschen.php';
             $webseittitel = 'löschen';
             break;
         case 'info':
-            $seite = 'info.php';
+            $seite = 'screens/info.php';
             $webseittitel = 'Info';
             break;
         default:
-            $seite = 'info.php';
+            $seite = 'screens/info.php';
             $webseittitel = 'Info';
             break;
     }

@@ -1,7 +1,4 @@
 <?php
-require_once 'config.php';
-
-$letzterTag = strtotime("today", time());
 
 //DB
 try {
@@ -24,17 +21,14 @@ foreach ($ergebnis as $zeile) {
     $tankstelle = Array();
 
     $tankstelle = [
-        'TankstellenID' => $zeile['TankstellenID'],
-        'Name' => $zeile['Name'],
-        'Farbe' => $zeile['Farbe'],
-        'Preise' => null
+            'TankstellenID' => $zeile['TankstellenID'],
+            'Name' => $zeile['Name'],
+            'Farbe' => $zeile['Farbe'],
+            'Preise' => null
     ];
 
     $tankstellen[] = $tankstelle;
 }
-
-$startzeit = $letzterTag - 7 * 24 * 60 * 60;
-$preiszeiten = array();
 
 foreach ($tankstellen as &$tk) {
 
@@ -45,7 +39,9 @@ foreach ($tankstellen as &$tk) {
     $id = $tk['TankstellenID'];
     $kommando->bindParam(':id', $id);
 
-    $zeit = date('o-n-j H:i:s', $startzeit);
+    $lastcomphour = time() - (time() % 3600);
+    $abfragezeit = $lastcomphour - (6 * 60 * 60);
+    $zeit = date('o-n-j H:i:s', $abfragezeit);
     $kommando->bindParam(':zeit', $zeit);
 
     $kommando->execute();
@@ -55,77 +51,26 @@ foreach ($tankstellen as &$tk) {
     while ($test = $kommando->fetch(PDO::FETCH_ASSOC)) {
 
         $preis[strtotime($test['Zeit'])] = $test[$BENZINART];
-        $preiszeiten[strtotime($test['Zeit'])] = null;
     }
+
     $tk['Preise'] = $preis;
 }
 
-ksort($preiszeiten);
+unset($tk);
 
-foreach ($tankstellen as $key => &$value)
+$tankstellenpreise = Array();
+
+foreach ($tankstellen as $tk)
 {
-    foreach ($preiszeiten as $key2 => $value2)
+    foreach ($tk['Preise'] as $key => $value)
     {
-        if (!key_exists($key2, $value['Preise']))
-        {
-            $value['Preise'][$key2] = 0;
-        }
+        $tankstellenpreise[$key][$tk['TankstellenID']] = $value;
     }
-    ksort($value['Preise']);
 }
 
-$zeitsprung = 60 * 60 * $diagramm['Stundenzusammenfassen']; //Angabe wie viele Stunden zusammengefasst werden.
+ksort($tankstellenpreise);
 
-foreach ($tankstellen as $key => &$value) {
-
-    $preisezusammengefasst = Array();
-    $anfangszeit = $startzeit;
-    $endzeit = $startzeit + $zeitsprung;
-    $preis = 0;
-
-    foreach ($value['Preise'] as $key2 => $value2) {
-
-        if ($key2 >= $endzeit) {
-
-            $preisezusammengefasst[$anfangszeit] = $preis;
-            $preis = 0;
-            $anfangszeit = $endzeit;
-            $endzeit += $zeitsprung;
-        }
-
-        if ($value2 < $preis) {
-
-            if ($value2 != 0) {
-
-                $preis = $value2;
-            }
-        } else {
-
-            if ($preis == 0) {
-
-                if ($value2 != 0) {
-
-                    $preis = $value2;
-                }
-            }
-        }
-    }
-
-    $value['Preise'] = $preisezusammengefasst;
-}
-
-$tankpreise = Array();
 unset($key, $value);
-
-foreach ($tankstellen as $key => $value)
-{
-    foreach ($value['Preise'] as $key2 => $value2)
-    {
-        $tankpreise[$key2][$value['TankstellenID']] = $value2;
-    }
-}
-
-ksort($tankpreise);
 
 $datenset = "";
 
@@ -133,7 +78,7 @@ foreach ($tankstellen as $tanke)
 {
     $preisString = '';
 
-    foreach ($tankpreise as $zeitpunkt) {
+    foreach ($tankstellenpreise as $zeitpunkt) {
         $test = null;
         foreach ($zeitpunkt as $key => $value) {
             if ($key == $tanke['TankstellenID']) {
@@ -155,15 +100,16 @@ foreach ($tankstellen as $tanke)
 
 $labels = '';
 
-foreach ($tankpreise as $preise => $value)
+foreach ($tankstellenpreise as $preise => $value)
 {
-    $temp = date('d.m.Y G:i', $preise);
+    $temp = date('G:i', $preise);
     $labels .= "'$temp',";
 }
+$labels = substr($labels, 0, -1);
 ?>
 <div class="Diagramm">
     <canvas id="myChart"></canvas>
-    <script src="js/Chart.js"></script>
+    <script src="../js/Chart.js"></script>
     <script>
         var myChartObject = document.getElementById('myChart');
 
