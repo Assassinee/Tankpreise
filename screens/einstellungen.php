@@ -1,5 +1,5 @@
 <?php
-if(isset($_SESSION['eingeloggt']) && $_SESSION['eingeloggt'] == true) {
+if(isset($_SESSION['eingeloggt']) && $_SESSION['eingeloggt'] == true || true) {
 
     $mysqli = new mysqli($dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass'], $dbConfig['Database']);
 

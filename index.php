@@ -4,6 +4,7 @@ require_once 'config.php';
 
 $seite = '';
 $webseittitel = '';
+$passwordrequired = false;
 
 if(isset($_GET['benzinart']))
 {
@@ -24,8 +25,9 @@ if (isset($_COOKIE['benzinart']))
 
 if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
 
-    $seite = 'login.php';
+    $seite = 'screens/login.php';
     $webseittitel = 'Login';
+
 } else {
 
     $siteget = '';
@@ -40,35 +42,48 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
         case 'Diagramm':
             $seite = 'screens/diagramm.php';
             $webseittitel = 'Diagramm';
+            $passwordrequired = false;
             break;
         case 'DiagrammWoche':
             $seite = 'screens/diagrammWoche.php';
             $webseittitel = 'DiagrammWoche';
+            $passwordrequired = false;
             break;
         case 'Einstellung':
             $seite = 'screens/einstellungen.php';
             $webseittitel = 'Einstellung';
+            $passwordrequired = true;
             break;
         case 'suchen':
             $seite = 'screens/suchen.php';
             $webseittitel = 'Tankstelle suchen';
+            $passwordrequired = true;
             break;
         case 'bearbeiten':
             $seite = 'screens/bearbeiten.php';
             $webseittitel = 'bearbeiten';
+            $passwordrequired = true;
             break;
         case 'loeschen':
             $seite = 'screens/loeschen.php';
             $webseittitel = 'löschen';
-            break;
-        case 'info':
-            $seite = 'screens/info.php';
-            $webseittitel = 'Info';
+            $passwordrequired = true;
             break;
         default:
             $seite = 'screens/info.php';
             $webseittitel = 'Info';
+            $passwordrequired = false;
             break;
+    }
+
+    //TODO: Notice: Undefined index: eingeloggt in /Users/max/website/tankpreise/index.php on line 85
+    if ($passwordrequired && @$_SESSION['eingeloggt'] != true)
+    {
+        $redirectsite = $seite;
+        $redirecttitle = $webseittitel;
+
+        $seite = 'screens/login.php';
+        $webseittitel = 'Login';
     }
 }
 

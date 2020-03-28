@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['eingeloggt'] == true) {
+if($_SESSION['eingeloggt'] == true || true) {
 
     if(isset($_POST['submitsuche'])) {  // ausgewaehlte Tankstellen werden hinzugefuegt
 
