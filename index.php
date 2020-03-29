@@ -2,6 +2,14 @@
 session_start();
 require_once 'config.php';
 
+if (array_key_exists($language, Array('DE' => null, 'EN' => null)))
+{
+    require_once 'lang/'.$language.'.php';
+} else {
+
+    require_once 'lang/EN.php';
+}
+
 $seite = '';
 $webseittitel = '';
 $passwordrequired = false;
@@ -60,14 +68,19 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
             $passwordrequired = true;
             break;
         case 'bearbeiten':
-            $seite = 'screens/bearbeiten.php';
-            $webseittitel = 'bearbeiten';
+            $seite = 'screens/edit.php';
+            $webseittitel = $languagetext['edit']['title'];
             $passwordrequired = true;
             break;
         case 'loeschen':
             $seite = 'screens/loeschen.php';
             $webseittitel = 'löschen';
             $passwordrequired = true;
+            break;
+        case 'login':
+            $seite = 'screens/login.php';
+            $webseittitel = 'login';
+            $passwordrequired = false;
             break;
         default:
             $seite = 'screens/info.php';
