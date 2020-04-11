@@ -27,7 +27,7 @@ if(isset($_GET['id']))
             $tsDesc = $_POST['tsdesc'];
             $command->bindParam(':tsdesc', $tsDesc);
 
-            $tsColor = $_POST['feldRGB'];
+            $tsColor = $_POST['fieldRGB'];
             $command->bindParam(':tscolor', $tsColor);
 
             $command->bindParam(':id', $id);
@@ -72,7 +72,9 @@ if(isset($_GET['id']))
         $table .= '<div id="tankstellenuebersicht">
                     <h1 style="text-align: center;">'. $languagetext['edit']['table']['title'] .'</h1>
                     <table class="table table-striped table-bordered table-hover">
-                    <thead class="thead-dark"><tr><th>'.$languagetext['edit']['table']['id'].'</th><th>'.$languagetext['edit']['table']['name'].'</th><th>'.$languagetext['edit']['table']['color'].'</th><th>'.$languagetext['edit']['table']['description'].'</th></tr></thead>';
+                    <thead class="thead-dark"><tr><th>'.$languagetext['edit']['table']['id'].'</th><th>'
+                    .$languagetext['edit']['table']['name'].'</th><th>'.$languagetext['edit']['table']['color']
+                    .'</th><th>'.$languagetext['edit']['table']['description'].'</th></tr></thead>';
 
         $colorHEX = sprintf("#%02x%02x%02x", 153, 102, 255);
 

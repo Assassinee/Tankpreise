@@ -48,23 +48,23 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
     switch ($siteget) {
 
         case 'Diagramm':
-            $seite = 'screens/diagramm.php';
-            $webseittitel = 'Diagramm';
+            $seite = 'screens/diagram.php';
+            $webseittitel = $languagetext['diagram']['title'];
             $passwordrequired = false;
             break;
         case 'DiagrammWoche':
             $seite = 'screens/diagrammWoche.php';
-            $webseittitel = 'DiagrammWoche';
+            $webseittitel = $languagetext['diagramwoche']['title'];
             $passwordrequired = false;
             break;
         case 'Einstellung':
-            $seite = 'screens/einstellungen.php';
-            $webseittitel = 'Einstellung';
+            $seite = 'screens/settings.php';
+            $webseittitel = $languagetext['settings']['title'];
             $passwordrequired = true;
             break;
         case 'suchen':
-            $seite = 'screens/suchen.php';
-            $webseittitel = 'Tankstelle suchen';
+            $seite = 'screens/search.php';
+            $webseittitel = $languagetext['search']['title'];
             $passwordrequired = true;
             break;
         case 'bearbeiten':
@@ -73,13 +73,13 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
             $passwordrequired = true;
             break;
         case 'loeschen':
-            $seite = 'screens/loeschen.php';
-            $webseittitel = 'löschen';
+            $seite = 'screens/delete.php';
+            $webseittitel = $languagetext['delete']['title'];
             $passwordrequired = true;
             break;
         case 'login':
             $seite = 'screens/login.php';
-            $webseittitel = 'login';
+            $webseittitel = $languagetext['login']['title'];
             $passwordrequired = false;
             break;
         default:
