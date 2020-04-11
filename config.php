@@ -24,6 +24,7 @@ $benzinarten = [
 //rest
 $webseitenpasswort = '';
 $webseitenzugriff = 1; //1 = öffentlich; 0 = mit Passwort
+$language = 'DE';
 
 //APi's
 $apiKey = Array();
