@@ -1,57 +1,41 @@
 <?php
 
-$mysqli = new mysqli($dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass'], $dbConfig['Database']);
+require_once 'config.php';
 
-$sql = 'SELECT count(TankstellenID) FROM tankstellen';
+//DB
+try {
 
-$result = $mysqli->query($sql);
+    $db = new PDO($dbConfig['Typ'] . ':dbname=' . $dbConfig['Database'] . ';host=' . $dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass']);
+} catch (PDOException $e) {
 
-$anzahl = $result->fetch_row();
-
-$anzahl = $anzahl[0];
-
-$benzinart = $diagramm['benzinart'];
-
-$sql = "SELECT $benzinart FROM preise order by Zeit desc limit $anzahl";
-
-$result = $mysqli->query($sql);
-
-$row = $result->fetch_row();
-
-$aktuellerpreis = 10.0;
-
-while ($row != null) {
-
-    if($row[0] != 0 && $row[0] < $aktuellerpreis) {
-
-        $aktuellerpreis = $row[0];
-    }
-    $row = $result->fetch_row();
+    echo $e->getMessage();
+    exit();
 }
 
-$tabelle = '<table id="tabelleinfos"><th>aktueller Preis:</th><td>';
+//TODO: Limit variable machen
+$sql = "Select min($BENZINART) From (SELECT $BENZINART FROM preise where Status = 'open' order by Zeit desc limit 5) as letztepreise";
 
-$tabelle .= '<tr><td>' . $aktuellerpreis . '</td></tr>';
+$kommando = $db->query($sql);
 
-$anfang = date('Y-m-d G:i:s', (time() - (60 * 60 * 24 * 7)));
-$ende = date('Y-m-d G:i:s');
+$aktuellerpreis = $kommando->fetch()[0];
 
-$sql = "SELECT min($benzinart), max($benzinart) FROM preise where Zeit BETWEEN '$anfang' and '$ende' and Status = 'open'";
+$sql = "SELECT min($BENZINART) FROM preise where Zeit >= :zeit and Status = 'open'";
 
-$result = $mysqli->query($sql);
+$kommando = $db->prepare($sql);
 
-$row = $result->fetch_row();
+$letzterTag = strtotime("today", time());
+$zeit = date('o-n-j H:i:s', $letzterTag - 60 * 60 * 24 * 7);
+$kommando->bindParam(':zeit', $zeit);
 
-$tabelle .= "<tr><td>min Preis:</td></tr><tr><td>$row[0]</td></tr>";
-$tabelle .= "<tr><td>max Preis:</td></tr><tr><td>$row[1]</td></tr>";
+$kommando->execute();
 
+$preisWoche = $kommando->fetch()[0];
 
-
-
-
-$tabelle .= '</td></table>';
+$tabelle = '<table id="tabelleinfos"><tr><td>Aktueller Preis:</td><td>';
+$tabelle .= $aktuellerpreis;
+$tabelle .= '€</td></tr><tr><td>Preis 7 Tage:</td><td>';
+$tabelle .= $preisWoche;
+$tabelle .= '€</td></tr></table>';
 
 echo $tabelle;
-
-
 ?>
