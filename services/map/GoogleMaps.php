@@ -10,29 +10,29 @@ class GoogleMaps implements Map
     private $title;
     private $markers;
 
-    public function __construct($apiKey) {
-
+    public function __construct($apiKey)
+    {
         $this->apiKey = $apiKey;
     }
 
-    public function setData($lat, $lng, $title)
+    public function setData($lat, $lng, $title): void
     {
         $this->lat = $lat;
         $this->lng = $lng;
         $this->title = $title;
     }
 
-    public function addMarker($lat, $lng, $title, $icon) {
-
+    public function addMarker($lat, $lng, $title, $icon): void
+    {
         $this->markers .= "new google.maps.Marker({position: {lat: $lat, lng: $lng}, map: map, title: '$title', icon: '$icon'});";
     }
 
-    public function getMap()
+    public function getMap(): string
     {
-        return '<div style=\'margin-left: auto; margin-right: auto; height: 50%; width: 70%;\'><div style=\'height: 100%;\' id="map"></div></div>';
+        return '<div style="margin-left: auto; margin-right: auto; height: 50%; width: 70%;"><div style="height: 100%;" id="map"></div></div>';
     }
 
-    public function getJS()
+    public function getJS(): string
     {
         return "<script>
                     function initMap() {
@@ -50,6 +50,6 @@ class GoogleMaps implements Map
                         $this->markers;
                     }
                   </script>
-                  <script src=\"https://maps.googleapis.com/maps/api/js?key=" . $this->apiKey . "&callback=initMap\" async defer></script>";
+                  <script src=\"https://maps.googleapis.com/maps/api/js?key=$this->apiKey&callback=initMap\" async defer></script>";
     }
 }

@@ -2,8 +2,17 @@
 session_start();
 require_once 'config.php';
 
+if (array_key_exists($language, Array('DE' => null, 'EN' => null)))
+{
+    require_once 'lang/'.$language.'.php';
+} else {
+
+    require_once 'lang/EN.php';
+}
+
 $seite = '';
 $webseittitel = '';
+$passwordrequired = false;
 
 if(isset($_GET['benzinart']))
 {
@@ -24,8 +33,9 @@ if (isset($_COOKIE['benzinart']))
 
 if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
 
-    $seite = 'login.php';
+    $seite = 'screens/login.php';
     $webseittitel = 'Login';
+
 } else {
 
     $siteget = '';
@@ -38,37 +48,55 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
     switch ($siteget) {
 
         case 'Diagramm':
-            $seite = 'diagramm.php';
-            $webseittitel = 'Diagramm';
+            $seite = 'screens/diagram.php';
+            $webseittitel = $languagetext['diagram']['title'];
+            $passwordrequired = false;
             break;
         case 'DiagrammWoche':
-            $seite = 'diagrammWoche.php';
-            $webseittitel = 'DiagrammWoche';
+            $seite = 'screens/diagrammWoche.php';
+            $webseittitel = $languagetext['diagramwoche']['title'];
+            $passwordrequired = false;
             break;
         case 'Einstellung':
-            $seite = 'einstellungen.php';
-            $webseittitel = 'Einstellung';
+            $seite = 'screens/settings.php';
+            $webseittitel = $languagetext['settings']['title'];
+            $passwordrequired = true;
             break;
         case 'suchen':
-            $seite = 'suchen.php';
-            $webseittitel = 'Tankstelle suchen';
+            $seite = 'screens/search.php';
+            $webseittitel = $languagetext['search']['title'];
+            $passwordrequired = true;
             break;
         case 'bearbeiten':
-            $seite = 'bearbeiten.php';
-            $webseittitel = 'bearbeiten';
+            $seite = 'screens/edit.php';
+            $webseittitel = $languagetext['edit']['title'];
+            $passwordrequired = true;
             break;
         case 'loeschen':
-            $seite = 'loeschen.php';
-            $webseittitel = 'löschen';
+            $seite = 'screens/delete.php';
+            $webseittitel = $languagetext['delete']['title'];
+            $passwordrequired = true;
             break;
-        case 'info':
-            $seite = 'info.php';
-            $webseittitel = 'Info';
+        case 'login':
+            $seite = 'screens/login.php';
+            $webseittitel = $languagetext['login']['title'];
+            $passwordrequired = false;
             break;
         default:
-            $seite = 'info.php';
+            $seite = 'screens/info.php';
             $webseittitel = 'Info';
+            $passwordrequired = false;
             break;
+    }
+
+    //TODO: Notice: Undefined index: eingeloggt in /Users/max/website/tankpreise/index.php on line 85
+    if ($passwordrequired && @$_SESSION['eingeloggt'] != true)
+    {
+        $redirectsite = $seite;
+        $redirecttitle = $webseittitel;
+
+        $seite = 'screens/login.php';
+        $webseittitel = 'Login';
     }
 }
 

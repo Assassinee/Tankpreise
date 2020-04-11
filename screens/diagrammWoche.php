@@ -1,11 +1,8 @@
 <?php
-require_once 'config.php';
+$lastFullDay = strtotime("today", time());
 
-$letzterTag = strtotime("today", time());
-
-//DB
-try {
-
+try
+{
     $db = new PDO($dbConfig['Typ'] . ':dbname=' . $dbConfig['Database'] . ';host=' . $dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass']);
 } catch (PDOException $e) {
 
@@ -15,56 +12,59 @@ try {
 
 $sql = 'Select TankstellenID, Name, Farbe From tankstellen';
 
-$ergebnis = $db->query($sql);
+$command = $db->query($sql);
 
-$tankstellen = Array();
+$gasStations = Array();
 
-foreach ($ergebnis as $zeile) {
+foreach ($command as $key => $value)
+{
+    $gasStation = Array();
 
-    $tankstelle = Array();
-
-    $tankstelle = [
-        'TankstellenID' => $zeile['TankstellenID'],
-        'Name' => $zeile['Name'],
-        'Farbe' => $zeile['Farbe'],
+    $gasStation = [
+        'TankstellenID' => $value['TankstellenID'],
+        'Name' => $value['Name'],
+        'Farbe' => $value['Farbe'],
         'Preise' => null
     ];
 
-    $tankstellen[] = $tankstelle;
+    $gasStations[] = $gasStation;
 }
 
-$startzeit = $letzterTag - 7 * 24 * 60 * 60;
-$preiszeiten = array();
+$startTime = $lastFullDay - 7 * 24 * 60 * 60;
+$pricePerTime = array();
 
-foreach ($tankstellen as &$tk) {
+unset($key, $value);
 
+foreach ($gasStations as $key => &$value)
+{
+    //TODO:Benzinart
     $sql = 'SELECT Zeit, ' . $BENZINART . ' From preise where TankstellenID = :id and Status = "open" and Zeit >= :zeit';
 
-    $kommando = $db->prepare($sql);
+    $command = $db->prepare($sql);
 
-    $id = $tk['TankstellenID'];
-    $kommando->bindParam(':id', $id);
+    $id = $value['TankstellenID'];
+    $command->bindParam(':id', $id);
 
-    $zeit = date('o-n-j H:i:s', $startzeit);
-    $kommando->bindParam(':zeit', $zeit);
+    $time = date('o-n-j H:i:s', $startTime);
+    $command->bindParam(':zeit', $time);
 
-    $kommando->execute();
+    $command->execute();
 
-    $preis = Array();
+    $price = Array();
 
-    while ($test = $kommando->fetch(PDO::FETCH_ASSOC)) {
-
-        $preis[strtotime($test['Zeit'])] = $test[$BENZINART];
-        $preiszeiten[strtotime($test['Zeit'])] = null;
+    while ($query = $command->fetch(PDO::FETCH_ASSOC))
+    {
+        $price[strtotime($query['Zeit'])] = $query[$BENZINART];
+        $pricePerTime[strtotime($query['Zeit'])] = null;
     }
-    $tk['Preise'] = $preis;
+    $value['Preise'] = $price;
 }
 
-ksort($preiszeiten);
+ksort($pricePerTime);
 
-foreach ($tankstellen as $key => &$value)
+foreach ($gasStations as $key => &$value)
 {
-    foreach ($preiszeiten as $key2 => $value2)
+    foreach ($pricePerTime as $key2 => $value2)
     {
         if (!key_exists($key2, $value['Preise']))
         {
@@ -74,50 +74,49 @@ foreach ($tankstellen as $key => &$value)
     ksort($value['Preise']);
 }
 
-$zeitsprung = 60 * 60 * $diagramm['Stundenzusammenfassen']; //Angabe wie viele Stunden zusammengefasst werden.
+$timeJump = 60 * 60 * $diagramm['Stundenzusammenfassen'];
 
-foreach ($tankstellen as $key => &$value) {
+foreach ($gasStations as $key => &$value)
+{
+    $priceSummarized = Array();
+    $timeStart = $startTime;
+    $timeEnd = $startTime + $timeJump;
+    $price = 0;
 
-    $preisezusammengefasst = Array();
-    $anfangszeit = $startzeit;
-    $endzeit = $startzeit + $zeitsprung;
-    $preis = 0;
-
-    foreach ($value['Preise'] as $key2 => $value2) {
-
-        if ($key2 >= $endzeit) {
-
-            $preisezusammengefasst[$anfangszeit] = $preis;
-            $preis = 0;
-            $anfangszeit = $endzeit;
-            $endzeit += $zeitsprung;
+    foreach ($value['Preise'] as $key2 => $value2)
+    {
+        if ($key2 >= $timeEnd)
+        {
+            $priceSummarized[$timeStart] = $price;
+            $price = 0;
+            $timeStart = $timeEnd;
+            $timeEnd += $timeJump;
         }
 
-        if ($value2 < $preis) {
-
-            if ($value2 != 0) {
-
-                $preis = $value2;
+        if ($value2 < $price)
+        {
+            if ($value2 != 0)
+            {
+                $price = $value2;
             }
         } else {
-
-            if ($preis == 0) {
-
-                if ($value2 != 0) {
-
-                    $preis = $value2;
+            if ($price == 0)
+            {
+                if ($value2 != 0)
+                {
+                    $price = $value2;
                 }
             }
         }
     }
 
-    $value['Preise'] = $preisezusammengefasst;
+    $value['Preise'] = $priceSummarized;
 }
 
 $tankpreise = Array();
 unset($key, $value);
 
-foreach ($tankstellen as $key => $value)
+foreach ($gasStations as $key => $value)
 {
     foreach ($value['Preise'] as $key2 => $value2)
     {
@@ -129,7 +128,7 @@ ksort($tankpreise);
 
 $datenset = "";
 
-foreach ($tankstellen as $tanke)
+foreach ($gasStations as $tanke)
 {
     $preisString = '';
 
@@ -163,7 +162,7 @@ foreach ($tankpreise as $preise => $value)
 ?>
 <div class="Diagramm">
     <canvas id="myChart"></canvas>
-    <script src="js/Chart.js"></script>
+    <script src="../js/Chart.js"></script>
     <script>
         var myChartObject = document.getElementById('myChart');
 

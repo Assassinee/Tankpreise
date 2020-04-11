@@ -14,14 +14,14 @@ class Tankerkoenig implements Prices
         $this->apiKey = $apiKey;
     }
 
-    public function setData($lat, $lng, $radius)
+    public function setData($lat, $lng, $radius): void
     {
         $this->lat = $lat;
         $this->lng = $lng;
         $this->radius = $radius;
     }
 
-    public function getStations()
+    public function getStations(): array
     {
         $json = file_get_contents('https://creativecommons.tankerkoenig.de/json/list.php'
             ."?lat=$this->lat"
@@ -33,69 +33,64 @@ class Tankerkoenig implements Prices
 
         $data = json_decode($json, true);
 
-        $formattedData = null;
+        $stationData = null;
 
         foreach ($data['stations'] as $gasStation)
         {
-            $tank = null;
+            $station = null;
 
             $gasStationAddress = $gasStation['street']
                 . (($gasStation['houseNumber'] != '')
                     ? ' ' . $gasStation['houseNumber']
                     : '') . ', ' . $gasStation['place'];
 
-            $tank['id'] = $gasStation['id'];
-            $tank['name'] = $gasStation['name'];
-            $tank['adresse'] = $gasStationAddress;
-            $tank['entfernung'] = $gasStation['dist'];
-            $tank['lat'] = $gasStation['lat'];
-            $tank['lng'] = $gasStation['lng'];
+            $station['id'] = $gasStation['id'];
+            $station['name'] = $gasStation['name'];
+            $station['adresse'] = $gasStationAddress;
+            $station['entfernung'] = $gasStation['dist'];
+            $station['lat'] = $gasStation['lat'];
+            $station['lng'] = $gasStation['lng'];
 
-            $formattedData[] = $tank;
+            $stationData[] = $station;
         }
-        return $formattedData;
+        return $stationData;
     }
 
-    public function getPrice($tankstellen)
+    public function getPrice($stations): array
     {
-        $preise = Array();
-        $tankstellenids = '';
+        $prices = Array();
+        $stationids = '';
 
-        foreach ($tankstellen as $key => $value)
+        foreach ($stations as $key => $value)
         {
-            $tankstellenids .= $value . ',';
+            $stationids .= $value . ',';
         }
 
-        $tankstellenids = substr($tankstellenids, 0, -1);
+        $stationids = substr($stationids, 0, -1);
 
         $json = file_get_contents('https://creativecommons.tankerkoenig.de/json/prices.php'
-                ."?ids=$tankstellenids"
+                ."?ids=$stationids"
                 ."&apikey=$this->apiKey");
 
         $data = json_decode($json, true);
 
-        if ($data['ok'] != 1)
-        {
-            echo 'Es ist ein Fehler aufgetreten';
-        }
-
         foreach ($data['prices'] as $key => $value)
         {
+            $prices[$key]['status'] = $value['status'];
+
             if ($value['status'] == 'open')
             {
-                $preise[$key]['status'] = $value['status'];
-                $preise[$key]['e5'] = $value['e5'];
-                $preise[$key]['e10'] = $value['e10'];
-                $preise[$key]['diesel'] = $value['diesel'];
+                $prices[$key]['e5'] = $value['e5'];
+                $prices[$key]['e10'] = $value['e10'];
+                $prices[$key]['diesel'] = $value['diesel'];
             }
             else
             {
-                $preise[$key]['status'] = $value['status'];
-                $preise[$key]['e5'] = 0;
-                $preise[$key]['e10'] = 0;
-                $preise[$key]['diesel'] = 0;
+                $prices[$key]['e5'] = 0;
+                $prices[$key]['e10'] = 0;
+                $prices[$key]['diesel'] = 0;
             }
         }
-        return $preise;
+        return $prices;
     }
 }
