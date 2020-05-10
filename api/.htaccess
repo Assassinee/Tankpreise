@@ -1,0 +1,3 @@
+RewriteEngine On    # Turn on the rewriting engine
+
+RewriteRule ^api/([0-9a-zA-Z_-]*)$ api.php?name=$1 [NC,L]
