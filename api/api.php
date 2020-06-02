@@ -1,12 +1,13 @@
 <?php
-header("Content-Type:application/json");
+header("Content-Type: application/json; charset=UTF-8");
 require '../config.php';
 
-if(!empty($_GET['name']))
+if(!empty($_GET['action']))
 {
-    $name = $_GET['name'];
-    $price = NULL;
-    $BENZINART = $_GET['typ'];
+    $action = $_GET['action'];
+    @$stationID = $_GET['stationid'];
+    $gastyp = isset($_GET['typ']) ? $_GET['typ'] : $diagramm['benzinart'];
+    $found = false;
 
     //DB
     try {
@@ -18,37 +19,25 @@ if(!empty($_GET['name']))
         exit();
     }
 
-    if ($name == 'price') {
+    if ($action == 'price') {
 
-        $sql = "Select min($BENZINART) From (SELECT $BENZINART FROM preise where Status = 'open' order by Zeit desc limit 5) as letztepreise";
+        $sql = "SELECT E5, E10, Diesel FROM preise WHERE TankstellenID = :gasstationid order by Zeit desc Limit 1";
 
-        $kommando = $db->query($sql);
+        $command = $db->prepare($sql);
 
-        $price = $kommando->fetch()[0];
+        $command->bindParam(':gasstationid', $stationID);
+
+        $command->execute();
+
+        $price = $command->fetch();
+
+        $found = true;
+        response(200, '', array('E5' => $price['E5'], 'E10' => $price['E10'], 'Diesel' => $price['Diesel']));
     }
 
-    if ($name == 'priceweek') {
-
-        $sql = "SELECT min($BENZINART) FROM preise where Zeit >= :zeit and Status = 'open'";
-
-        $kommando = $db->prepare($sql);
-
-        $letzterTag = strtotime("today", time());
-        $zeit = date('o-n-j H:i:s', $letzterTag - 60 * 60 * 24 * 7);
-        $kommando->bindParam(':zeit', $zeit);
-
-        $kommando->execute();
-
-        $price = $kommando->fetch()[0];
-    }
-
-    if(empty($price))
+    if(!$found)
     {
-        response(200,"Product Not Found",NULL);
-    }
-    else
-    {
-        response(200,"Product Found",$price);
+        response(200,"Invalid name",NULL);
     }
 }
 else
@@ -56,12 +45,13 @@ else
     response(400,"Invalid Request",NULL);
 }
 
-function response($status,$status_message,$data)
+function response($status, $message, $data)
 {
-    header("HTTP/1.1 ".$status);
+    header('HTTP/1.1 ' . $status);
 
+    $response = Array();
     $response['status'] = $status;
-    $response['status_message'] = $status_message;
+    $response['message'] = $message;
     $response['data'] = $data;
 
     $json_response = json_encode($response);
