@@ -2,6 +2,7 @@
 
 require_once 'config.php';
 require_once 'services/Services.php';
+require_once 'modules/ModuleManager.php';
 
 $aktuelleZeit = time();
 
@@ -55,4 +56,15 @@ foreach ($preise as $key => $value)
 
     $kommando->execute();
 }
-?>
+
+if (array_key_exists($language, Array('DE' => null, 'EN' => null)))
+{
+    require_once 'lang/'.$language.'.php';
+} else {
+
+    require_once 'lang/EN.php';
+}
+
+$manager = new ModuleManager();
+
+$manager->runModules();

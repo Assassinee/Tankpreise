@@ -1,8 +1,9 @@
 <?php
 
 $telegramConfig = [
+    'xmlfile' => 'config/telegram.xml',
     'token' => '',
     'users' => [
-        'Test' => '123456789'
+        'User1' => 'XXXXXXXXX'
     ]
 ];
