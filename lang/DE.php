@@ -64,3 +64,10 @@ $languagetext['search'][11] = 'hinzufügen';
 $languagetext['search'][12] = 'MYSQL Fehler';
 $languagetext['search'][13] = 'Fehler';
 $languagetext['search'][14] = 'Es wurden keine Tankstellen ausgewählt';
+
+$languagetext['modules']['telegram'][0] = 'Ich werde dich bei einem Preis von ';
+$languagetext['modules']['telegram'][1] = '€ für ';
+$languagetext['modules']['telegram'][2] = ' errinnern.';
+$languagetext['modules']['telegram'][3] = 'Der Preis für ';
+$languagetext['modules']['telegram'][4] = ' liegt bei ';
+$languagetext['modules']['telegram'][5] = '€.';
