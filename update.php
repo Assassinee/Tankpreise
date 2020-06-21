@@ -57,7 +57,7 @@ foreach ($preise as $key => $value)
     $kommando->execute();
 }
 
-if (array_key_exists($language, Array('DE' => null, 'EN' => null)))
+if (array_key_exists($language, $availableLanguages))
 {
     require_once 'lang/'.$language.'.php';
 } else {

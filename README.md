@@ -50,6 +50,10 @@ Wird für die Übersetzung von einer Adresse in Koordinaten benötigt.
 Wird für die Abfrage der Benzinpreise benötigt.
 - [Tankerkoenig](https://creativecommons.tankerkoenig.de/)
 
+## Module:
+Es ist möglich die Funktionalität der Anwenung durch Module zu erweitern.
+- [Telegram Bot](TELEGRAM.md)
+
 ## Entwicklung
 ![GitHub issues](https://img.shields.io/github/issues/Assassinee/Tankpreise)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/Assassinee/Tankpreise)
