@@ -17,15 +17,15 @@ $gasStations = Array();
 
 $table = '<div id="tankstellenuebersicht">
             <table class="table table-striped table-bordered table-hover">
-            <thead class="thead-dark"><tr><th>'.$languagetext['settings'][2].'</th><th>'.$languagetext['settings'][3].'</th><th>'.$languagetext['settings'][4].'</th><th>'.$languagetext['settings'][5].'</th><th>'.$languagetext['settings'][6].'</th><th>'.$languagetext['settings'][7].'</th></tr></thead>';
+            <thead class="thead-dark"><tr><th>'.$languagetext['settings']['id'].'</th><th>'.$languagetext['settings']['name'].'</th><th>'.$languagetext['settings']['color'].'</th><th>'.$languagetext['settings']['description'].'</th><th>'.$languagetext['settings']['edit'].'</th><th>'.$languagetext['settings']['delete'].'</th></tr></thead>';
 
 foreach ($command as $key => $value)
 {
     $table .= '<tr><td>' . $value['TankstellenID'] . '</td><td>' . $value['Name'] . '</td><td>'
                 . $value['Farbe'] . '<div style="height: 15px; width: 15px; background-color: rgba('
                 . $value['Farbe'] . ',1);"></div></td><td>' . $value['Beschreibung'] . '</td><td>'
-                . '<a href="?site=bearbeiten&id=' . $value['TankstellenID'] . '">'.$languagetext['settings'][6].'</a></td>'
-                . '<td><a href="?site=loeschen&id=' . $value['TankstellenID'] . '">'.$languagetext['settings'][7].'</a></td></tr>';
+                . '<a href="?site=bearbeiten&id=' . $value['TankstellenID'] . '">'.$languagetext['settings']['edit'].'</a></td>'
+                . '<td><a href="?site=loeschen&id=' . $value['TankstellenID'] . '">'.$languagetext['settings']['delete'].'</a></td></tr>';
 }
 
 $table .= '</table></div>';
@@ -35,8 +35,8 @@ $form = '<div id="tankstellehinzufuegen" >
                 <div class="form-group mx-sm-2 mb-2">
                     <input type="text" class="form-control" name="tankstellenid" placeholder="TankstellenID">
                 </div>
-                <button type="submit" name="submit" class="btn btn-primary mb-2">'.$languagetext['settings'][8].'</button>
-                <button type="button" class="btn btn-primary mb-2" style="margin-left: 10px;" onclick="parent.location=\'index.php?site=suchen\'">'.$languagetext['settings'][9].'</button>
+                <button type="submit" name="submit" class="btn btn-primary mb-2">'.$languagetext['settings']['add'].'</button>
+                <button type="button" class="btn btn-primary mb-2" style="margin-left: 10px;" onclick="parent.location=\'index.php?site=suchen\'">'.$languagetext['settings']['search'].'</button>
             </form>
          </div>';
 

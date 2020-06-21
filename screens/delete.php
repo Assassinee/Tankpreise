@@ -27,12 +27,12 @@ if(isset($_GET['id']))
 
         if($error = $command->errorInfo()[0] == 0)
         {
-            $_SESSION['Erfolg']['Titel'] = $languagetext['delete'][2];
-            $_SESSION['Erfolg']['Meldung'] = $languagetext['delete'][3];
+            $_SESSION['Erfolg']['Titel'] = $languagetext['delete']['deleted'];
+            $_SESSION['Erfolg']['Meldung'] = $languagetext['delete']['deletedmsg'];
             header('location: index.php?site=Einstellung');
         } else {
 
-            $_SESSION['Fehler']['Titel'] = $languagetext['delete'][4];
+            $_SESSION['Fehler']['Titel'] = $languagetext['delete']['mysqlerror'];
             $_SESSION['Fehler']['Meldung'] = $mysqli->error;
             header('location: index.php?site=Einstellung');
         }
@@ -49,16 +49,16 @@ if(isset($_GET['id']))
         $gasStation = $command->fetch();
 
         $tablelle = '<div id="tankstellenuebersicht">
-                <h1 style="text-align: center;">'.$languagetext['delete'][5].'</h1>
+                <h1 style="text-align: center;">'.$languagetext['delete']['deleteconf'].'</h1>
                 <table class="table table-striped table-bordered table-hover">
-                <thead class="thead-dark"><tr><th>'.$languagetext['delete'][6].'</th><th>'.$languagetext['delete'][7].'</th><th>'.$languagetext['delete'][8].'</th><th>'.$languagetext['delete'][9].'</th></tr></thead>';
+                <thead class="thead-dark"><tr><th>'.$languagetext['delete']['id'].'</th><th>'.$languagetext['delete']['name'].'</th><th>'.$languagetext['delete']['colour'].'</th><th>'.$languagetext['delete']['description'].'</th></tr></thead>';
 
         $tablelle .= '<tr><td>'.$gasStation['TankstellenID'].'</td><td>'.$gasStation['Name'].'</td><td>'.$gasStation['Farbe'].'<div style="height: 15px; width: 15px; background-color: rgba('.$gasStation['Farbe'].',1);"></div></td><td>'.$gasStation['Beschreibung'].'</td></tr>';
 
         $tablelle .= '</table></div>';
 
-        $form = '">\'' .$languagetext['delete'][10].'</button>
-                    <button type="button" class="btn btn-primary mb-2" style="margin-left: 10px;" onclick="parent.location=\'index.php?site=loeschen&id=' . $id . '&con=1' . '\'">'.$languagetext['delete'][11].'</button>
+        $form = '">\'' .$languagetext['delete']['cancel'].'</button>
+                    <button type="button" class="btn btn-primary mb-2" style="margin-left: 10px;" onclick="parent.location=\'index.php?site=loeschen&id=' . $id . '&con=1' . '\'">'.$languagetext['delete']['delete'].'</button>
                 </form>
              </div>';
 
@@ -67,8 +67,8 @@ if(isset($_GET['id']))
     }
 } else {
 
-    $_SESSION['Fehler']['Titel'] = $languagetext['delete'][12];
-    $_SESSION['Fehler']['Meldung'] = $languagetext['delete'][13];
+    $_SESSION['Fehler']['Titel'] = $languagetext['delete']['error'];
+    $_SESSION['Fehler']['Meldung'] = $languagetext['delete']['errormsg'];
 
     header('location: index.php?site=Einstellung');
 }
