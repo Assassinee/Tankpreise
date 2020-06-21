@@ -37,7 +37,7 @@ if(isset($_POST['submitsuche']))// ausgewaehlte Tankstellen werden hinzugefuegt
        {
 
        } else {
-           $_SESSION['Fehler']['Titel'] = $languagetext['search'][12];
+           $_SESSION['Fehler']['Titel'] = $languagetext['search']['mysqlerror'];
            $_SESSION['Fehler']['Meldung'] = $mysqli->error;
        }
 
@@ -46,8 +46,8 @@ if(isset($_POST['submitsuche']))// ausgewaehlte Tankstellen werden hinzugefuegt
         header('location: index.php?site=Einstellung');
     } else {
 
-        $_SESSION['Fehler']['Titel'] = $languagetext['search'][13];
-        $_SESSION['Fehler']['Meldung'] = $languagetext['search'][14];
+        $_SESSION['Fehler']['Titel'] = $languagetext['search']['error'];
+        $_SESSION['Fehler']['Meldung'] = $languagetext['search']['errormsg'];
         header('location: index.php?site=Einstellung');
     }
 }
@@ -108,7 +108,7 @@ elseif(isset($_POST['submit']))//Seite mit Karte & Tankstellen wird angezeigt
     $tabelle = '<div style="margin-left: auto; margin-right: auto; width: 70%;">
                 <form action="' . $_SERVER['REQUEST_URI'] . '" method = "POST" target="_self" accept-charset="UTF-8">
                 <table class="table table-striped table-bordered table-hover">
-                <thead class="thead-dark"><tr><th>'.$languagetext['search'][6].'</th><th>'.$languagetext['search'][7].'</th><th>'.$languagetext['search'][8].'</th><th>'.$languagetext['search'][9].'</th><th>'.$languagetext['search'][10].'</th><th>'.$languagetext['search'][11].'</th></tr></thead>';
+                <thead class="thead-dark"><tr><th>'.$languagetext['search']['nr'].'</th><th>'.$languagetext['search']['id'].'</th><th>'.$languagetext['search']['name'].'</th><th>'.$languagetext['search']['street'].'</th><th>'.$languagetext['search']['distance'].'</th><th>'.$languagetext['search']['add'].'</th></tr></thead>';
 
     $map = $servicesMap[$services['Map']];
 
@@ -136,7 +136,7 @@ elseif(isset($_POST['submit']))//Seite mit Karte & Tankstellen wird angezeigt
         $i++;
     }
 
-    $tabelle .= '</table><button type="submit" name="submitsuche" class="btn btn-primary">'.$languagetext['search'][11].'</button></form></div>';
+    $tabelle .= '</table><button type="submit" name="submitsuche" class="btn btn-primary">'.$languagetext['search']['add'].'</button></form></div>';
 
     echo $map->getMap();
     echo $tabelle;
@@ -148,21 +148,21 @@ elseif(isset($_POST['submit']))//Seite mit Karte & Tankstellen wird angezeigt
             <form action="' . $_SERVER['REQUEST_URI'] . '" method = "POST" target="_self" accept-charset="UTF-8">
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="inputAddress">'.$languagetext['search'][1].'</label>
+                        <label for="inputAddress">'.$languagetext['search']['address'].'</label>
                         <input type="text" name="adresse" class="form-control" id="inputAddress">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="inputCity">'.$languagetext['search'][2].'</label>
+                        <label for="inputCity">'.$languagetext['search']['city'].'</label>
                         <input type="text" name="stadt" class="form-control" id="inputCity">
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="inputZip">'.$languagetext['search'][3].'</label>
+                        <label for="inputZip">'.$languagetext['search']['postcode'].'</label>
                         <input type="number" name="plz" class="form-control" id="inputZip">
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="inputState">'.$languagetext['search'][4].'</label>
+                        <label for="inputState">'.$languagetext['search']['radius'].'</label>
                         <select id="inputState" name="radius" class="form-control">
                             <option value="1">1 km</option>
                             <option value="2">2 km</option>
@@ -172,7 +172,7 @@ elseif(isset($_POST['submit']))//Seite mit Karte & Tankstellen wird angezeigt
                         </select>
                     </div>
                 </div>
-                <button type="submit" name="submit" class="btn btn-primary">'.$languagetext['search'][5].'</button>
+                <button type="submit" name="submit" class="btn btn-primary">'.$languagetext['search']['search'].'</button>
             </form>
         </div>';
 }

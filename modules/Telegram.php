@@ -150,10 +150,10 @@ class Telegram implements Modules
             foreach ($messages as $key => $value)
             {
                 $this->addNotification($key, $value['information']['typ'], $value['information']['price']);
-                $this->sendMessage($key, $languagetext['modules']['telegram'][0]
-                                                . $price . $languagetext['modules']['telegram'][1]
+                $this->sendMessage($key, $languagetext['modules']['telegram']['confirm1']
+                                                . $price . $languagetext['modules']['telegram']['confirm2']
                                                 . $value['information']['typ']
-                                                . $languagetext['modules']['telegram'][2]);
+                                                . $languagetext['modules']['telegram']['confirm3']);
             }
         }
     }
@@ -202,11 +202,11 @@ class Telegram implements Modules
 
                     if ($petrolprice[$nodes->item(1)->nodeValue] <= floatval($nodes->item(2)->nodeValue))
                     {
-                        $this->sendMessage($value, $languagetext['modules']['telegram'][3]
+                        $this->sendMessage($value, $languagetext['modules']['telegram']['info1']
                                                     . $nodes->item(1)->nodeValue
-                                                    . $languagetext['modules']['telegram'][4]
+                                                    . $languagetext['modules']['telegram']['info2']
                                                     . $petrolprice[$nodes->item(1)->nodeValue]
-                                                    . $languagetext['modules']['telegram'][5]);
+                                                    . $languagetext['modules']['telegram']['info3']);
 
                         $node->item(0)->parentNode->removeChild($node->item(0));
                         $dom->save($telegramConfig['xmlfile']);
