@@ -22,9 +22,12 @@ $benzinarten = [
 ];
 
 //rest
+$language = 'DE';
+$availableLanguages = Array('DE' => NULL,
+                            'EN' => NULL);
 $webseitenpasswort = '';
 $webseitenzugriff = 1; //1 = öffentlich; 0 = mit Passwort
-$language = 'DE';
+
 
 //APi's
 $apiKey = Array();
@@ -36,5 +39,4 @@ $services = [
     'Map' => 'GoogleMaps',
     'Geocoding' => 'GoogleGeocoding',
     'Prices' => 'Tankerkoenig'
-]
-?>
+];
