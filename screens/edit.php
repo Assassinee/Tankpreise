@@ -76,7 +76,9 @@ if(isset($_GET['id']))
                     .$languagetext['edit']['table']['name'].'</th><th>'.$languagetext['edit']['table']['color']
                     .'</th><th>'.$languagetext['edit']['table']['description'].'</th></tr></thead>';
 
-        $colorHEX = sprintf("#%02x%02x%02x", 153, 102, 255);
+        $colorRGB = explode(',', $color);
+
+        $colorHEX = sprintf("#%02x%02x%02x", $colorRGB[0], $colorRGB[1], $colorRGB[2]);
 
         $table .= '<tr><td>' . $id . '</td><td><input type="text" name="tsname" value="' . $name
             . '" class="form-control"></td><td><table><tr><td>#Hex</td><td>RGB</td></tr><tr><td><input '
