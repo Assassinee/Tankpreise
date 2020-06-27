@@ -1,8 +1,8 @@
 <?php
 
-require_once 'iModules.php';
-require_once 'config/telegramConfig.php';
-require_once 'config.php';
+require_once __DIR__ . '/../iModules.php';
+require_once __DIR__ . '/../../config/telegramConfig.php';
+require_once __DIR__ . '/../../config.php';
 
 class Telegram implements Modules
 {
@@ -18,7 +18,7 @@ class Telegram implements Modules
         }
     }
 
-    private function sendMessage($user_id, $message): bool
+    public function sendMessage($user_id, $message): bool
     {
         global $telegramConfig;
 
@@ -61,11 +61,11 @@ class Telegram implements Modules
         return $lastupdate;
     }
 
-    private function addNotification($user_id, $typ, $price) {
+    public function addNotification($user_id, $typ, $price) {
 
         global $telegramConfig;
         $dom = new DOMDocument();
-        $dom->load($telegramConfig['xmlfile']);
+        $dom->load(__DIR__ . '/../../' . $telegramConfig['xmlfile']);
 
         if ($dom->getElementsByTagName('Notifications')->length == 0)
         {
@@ -86,7 +86,7 @@ class Telegram implements Modules
 
         $dom->getElementsByTagName('Notifications')->item(0)->appendChild($newElement);
 
-        $dom->save($telegramConfig['xmlfile']);
+        $dom->save(__DIR__ . '/../../' . $telegramConfig['xmlfile']);
     }
 
     private function getMessages() {
@@ -218,7 +218,6 @@ class Telegram implements Modules
 
     public function run(): void
     {
-        $this->getMessages();
         $this->checkprice();
     }
 }

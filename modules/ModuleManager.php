@@ -1,5 +1,5 @@
 <?php
-require_once 'Telegram.php';
+require_once 'telegram/Telegram.php';
 
 class ModuleManager {
 
