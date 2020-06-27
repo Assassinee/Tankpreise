@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
-require '../config.php';
+require '../config/config.php';
 
 if(!empty($_GET['action']))
 {

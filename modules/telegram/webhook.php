@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../config/telegramConfig.php';
-require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../config(config.php';
 require_once 'Telegram.php';
 
 if (array_key_exists($language, $availableLanguages))

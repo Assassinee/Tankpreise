@@ -1,5 +1,5 @@
 <?php
-require_once '../config.php';
+require_once '../config/config.php';
 $BENZINART = $_GET['benzin'];
 
 $lastFullDay = strtotime("today", time());

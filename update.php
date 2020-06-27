@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config.php';
+require_once 'config/config.php';
 require_once 'services/Services.php';
 require_once 'modules/ModuleManager.php';
 

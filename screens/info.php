@@ -1,7 +1,5 @@
 <?php
 
-require_once 'config.php';
-
 //DB
 try {
 
@@ -38,4 +36,3 @@ $tabelle .= $preisWoche;
 $tabelle .= '€</td></tr></table>';
 
 echo $tabelle;
-?>
