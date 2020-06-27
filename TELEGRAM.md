@@ -1,5 +1,5 @@
 # Telegram Modul:
-Um das Telegram modul verwenden zu können benötigt man 2 Dinge.
+Um das Telegram Modul verwenden zu können benötigt man 2 Dinge.
 Als erstes wird ein Telegram-Bot benötigt.
 Als zweites muss man seine User-ID herausfinden und in der Config-Datei eintragen.
 
@@ -58,6 +58,18 @@ Dies macht man bei ```token```.
 Als letzten schritt müssen noch alle User eingetragen werden,
 auf die Der Bot reagieren soll. Dafür benötigt man seine User-ID.
 
+### Webhook einrichten:
+Damit der Bot vernünftig  arbeiten kann wird ein Webhook benötigt.
+Der Webhook verarbeitet die ankommenden Nachrichten des Bot's.
+
+Das Einrichten  ist sehr einfach. Es muss nur die URL aufgerufen werden und zwei Anpassungen  vorgenommen werden.
+Als erstes muss der APi-Key eingetragen werden und als zweites muss die URL zu der Webhook-Datei angegeben werden.
+
+```
+https://api.telegram.org/bot<API-KEY>/setwebhook?url=<Webhook.php>
+```
+
+
 ### User-ID herausfinden:
 
 Um seine ID herauszufinden, ist es am einfachsten den Bot @userinfobot
@@ -102,5 +114,5 @@ Der Bot besitzt die folgenden Befehle:
 - ```/preisinfo [TYP] [Betrag]```
 
 #### /preisinfo [TYP] [Betrag]
-Durch diesen Befehl ist es möglich, dass der Bot einem eine Errinnerung sendet,
-wenn der angegebende Betrag erreicht oder unterschritten wird.
+Durch diesen Befehl ist es möglich, dass der Bot einem eine Erinnerung sendet,
+wenn der angegebene Betrag erreicht oder unterschritten wird.
