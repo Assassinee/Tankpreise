@@ -1,14 +1,7 @@
 <?php
 session_start();
-require_once 'config.php';
-
-if (array_key_exists($language, $availableLanguages))
-{
-    require_once 'lang/'.$language.'.php';
-} else {
-
-    require_once 'lang/EN.php';
-}
+require_once 'config/config.php';
+require_once 'lang/loadLang.php';
 
 $seite = '';
 $webseittitel = '';

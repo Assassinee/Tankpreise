@@ -1,16 +1,9 @@
 <?php
 
 require_once __DIR__ . '/../../config/telegramConfig.php';
-require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../config/config.php';
 require_once 'Telegram.php';
-
-if (array_key_exists($language, $availableLanguages))
-{
-    require_once __DIR__ . '/../../lang/'.$language.'.php';
-} else {
-
-    require_once __DIR__ . '/../../lang/EN.php';
-}
+require_once '../../lang/loadLang.php';
 
 $update = json_decode(file_get_contents("php://input"), TRUE);
 

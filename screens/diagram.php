@@ -114,7 +114,7 @@ $labels = substr($labels, 0, -1);
 ?>
 <div class="Diagramm">
     <canvas id="myChart"></canvas>
-    <script src="../js/Chart.js"></script>
+    <script src="js/Chart.js"></script>
     <script>
         var myChartObject = document.getElementById('myChart');
 
