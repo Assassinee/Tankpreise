@@ -39,10 +39,10 @@ if(in_array($update['message']['chat']['id'], $telegramConfig['users']))
 
         $tg = new Telegram();
 
-        $tg->sendMessage($user_id, $languagetext['modules']['telegram'][0]
-            . $price . $languagetext['modules']['telegram'][1]
+        $tg->sendMessage($user_id, $languagetext['modules']['telegram']['confirm1']
+            . $price . $languagetext['modules']['telegram']['confirm2']
             . $typ
-            . $languagetext['modules']['telegram'][2]);
+            . $languagetext['modules']['telegram']['confirm3']);
 
         $tg->addNotification($user_id, $typ, $price);
     }
