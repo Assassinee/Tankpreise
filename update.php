@@ -3,6 +3,7 @@
 require_once 'config/config.php';
 require_once 'services/Services.php';
 require_once 'modules/ModuleManager.php';
+require_once 'lang/loadLang.php';
 
 $aktuelleZeit = time();
 
@@ -55,14 +56,6 @@ foreach ($preise as $key => $value)
     $kommando->bindParam(':diesel', $diesel);
 
     $kommando->execute();
-}
-
-if (array_key_exists($language, $availableLanguages))
-{
-    require_once 'lang/'.$language.'.php';
-} else {
-
-    require_once 'lang/EN.php';
 }
 
 $manager = new ModuleManager();
