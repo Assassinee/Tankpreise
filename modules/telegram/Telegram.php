@@ -186,7 +186,7 @@ class Telegram implements Modules
                             exit();
                         }
 
-                        $sql = 'SELECT min(E5) as "E5", min(E10) as "E10", min(Diesel) as "Diesel" FROM preise WHERE zeit = (SELECT zeit FROM preise ORDER by zeit desc limit 1)';
+                        $sql = 'SELECT min(E5) as "E5", min(E10) as "E10", min(Diesel) as "Diesel" FROM preise WHERE zeit = (SELECT zeit FROM preise ORDER by zeit desc limit 1) and Status = "open"';
 
                         $command = $db->query($sql);
 
@@ -200,7 +200,7 @@ class Telegram implements Modules
                     $node = $dom->getElementsByTagName('Notification_' . $value);
                     $nodes = $node->item(0)->childNodes;
 
-                    if ($petrolprice[$nodes->item(1)->nodeValue] <= floatval($nodes->item(2)->nodeValue))
+                    if ($petrolprice[$nodes->item(1)->nodeValue] != 0 && $petrolprice[$nodes->item(1)->nodeValue] <= floatval($nodes->item(2)->nodeValue))
                     {
                         $this->sendMessage($value, $languagetext['modules']['telegram']['info1']
                                                     . $nodes->item(1)->nodeValue
