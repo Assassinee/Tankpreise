@@ -24,10 +24,30 @@ class Telegram implements Modules
 
         $request_params = [
             'chat_id' => $user_id,
-            'text' => $message
+            'text' => $message,
+            'parse_mode' => 'html'
         ];
 
         $request_url = 'https://api.telegram.org/bot' . $telegramConfig['token'] . '/sendMessage?' . http_build_query($request_params);
+
+        $request = file_get_contents($request_url);
+
+        return json_decode($request, true)['ok'];
+    }
+
+    public function sendVenue($user_id, $lat, $lng, $title, $address): bool
+    {
+        global $telegramConfig;
+
+        $request_params = [
+            'chat_id' => $user_id,
+            'latitude' => $lat,
+            'longitude' => $lng,
+            'title' => $title,
+            'address' => $address
+        ];
+
+        $request_url = 'https://api.telegram.org/bot' . $telegramConfig['token'] . '/sendVenue?' . http_build_query($request_params);
 
         $request = file_get_contents($request_url);
 
@@ -202,11 +222,11 @@ class Telegram implements Modules
 
                     if ($petrolprice[$nodes->item(1)->nodeValue] != 0 && $petrolprice[$nodes->item(1)->nodeValue] <= floatval($nodes->item(2)->nodeValue))
                     {
-                        $this->sendMessage($value, $languagetext['modules']['telegram']['info1']
+                        $this->sendMessage($value, $languagetext['modules']['telegram']['check1']
                                                     . $nodes->item(1)->nodeValue
-                                                    . $languagetext['modules']['telegram']['info2']
+                                                    . $languagetext['modules']['telegram']['check2']
                                                     . $petrolprice[$nodes->item(1)->nodeValue]
-                                                    . $languagetext['modules']['telegram']['info3']);
+                                                    . $languagetext['modules']['telegram']['check3']);
 
                         $node->item(0)->parentNode->removeChild($node->item(0));
                         $dom->save($telegramConfig['xmlfile']);

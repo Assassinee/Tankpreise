@@ -93,4 +93,21 @@ class Tankerkoenig implements Prices
         }
         return $prices;
     }
+
+    public function getLocation($stationID)
+    {
+        $json = file_get_contents('https://creativecommons.tankerkoenig.de/json/detail.php'
+            ."?id=$stationID"
+            ."&apikey=$this->apiKey");
+
+        $data = json_decode($json, true);
+
+        $location = [
+            'lat' => $data['station']['lat'],
+            'lng' => $data['station']['lng'],
+            'address' => $data['station']['street']
+        ];
+
+        return $location;
+    }
 }
