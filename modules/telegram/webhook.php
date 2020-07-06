@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../config/telegramConfig.php';
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../services/Services.php';
 require_once 'Telegram.php';
-require_once '../../lang/loadLang.php';
+require_once __DIR__ . '/../../lang/loadLang.php';
 
 $update = json_decode(file_get_contents("php://input"), TRUE);
 
@@ -38,14 +38,14 @@ if(in_array($update['message']['chat']['id'], $telegramConfig['users']))
 
         $price = floatval(str_replace(',', '.', $text[2]));
 
-        $tg = new Telegram();
+        $telegram = new Telegram();
 
-        $tg->sendMessage($user_id, $languagetext['modules']['telegram']['confirm1']
+        $telegram->sendMessage($user_id, $languagetext['modules']['telegram']['confirm1']
             . $price . $languagetext['modules']['telegram']['confirm2']
             . $typ
             . $languagetext['modules']['telegram']['confirm3']);
 
-        $tg->addNotification($user_id, $typ, $price);
+        $telegram->addNotification($user_id, $typ, $price);
     } elseif(strpos($message, "/info") === 0) {
 
         $text = strtolower($update['message']['text']);
@@ -91,13 +91,13 @@ if(in_array($update['message']['chat']['id'], $telegramConfig['users']))
 
         $location = $tankerkoenig->getLocation($price[0]['TankstellenID']);
 
-        $tg = new Telegram();
+        $telegram = new Telegram();
 
-        $tg->sendMessage($user_id, $languagetext['modules']['telegram']['info1']
+        $telegram->sendMessage($user_id, $languagetext['modules']['telegram']['info1']
             . $typ . $languagetext['modules']['telegram']['info2']
             . $price[0]['Name'] . $languagetext['modules']['telegram']['info3']
             . $price[0][$typ] . $languagetext['modules']['telegram']['info4']);
 
-        $tg->sendVenue($user_id, $location['lat'], $location['lng'], $price[0]['Name'], $location['address']);
+        $telegram->sendVenue($user_id, $location['lat'], $location['lng'], $price[0]['Name'], $location['address']);
     }
 }
