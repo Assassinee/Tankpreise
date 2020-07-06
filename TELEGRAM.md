@@ -107,12 +107,14 @@ Send /empty to keep the list empty.
 jetzt kann man einen oder mehrere Befehle hinzufügen.
 Durch das hinzufügen der Befehle schlägt Telegram die Befehle direkt bei der Eingabe vor.
 
-
-
 # Bot Befehle:
 Der Bot besitzt die folgenden Befehle:
 - ```/preisinfo [TYP] [Betrag]```
+- ```/info [TYP]```
 
 #### /preisinfo [TYP] [Betrag]
 Durch diesen Befehl ist es möglich, dass der Bot einem eine Erinnerung sendet,
 wenn der angegebene Betrag erreicht oder unterschritten wird.
+
+#### /info [TYP]
+Durch diesen Befehl sendet der Bot einem den aktuell günstigsten Preis.
