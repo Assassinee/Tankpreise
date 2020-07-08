@@ -1,4 +1,14 @@
 <?php
+
+
+
+
+$languagetext['footer']['fuel'] = 'fuel type';
+$languagetext['footer']['info'] = 'info';
+$languagetext['footer']['Diagram'] = 'Diagram';
+$languagetext['footer']['DiagramWeek'] = 'DiagramWeek';
+$languagetext['footer']['settings'] = 'Settings';
+
 $languagetext['edit']['title'] = 'edit';
 $languagetext['edit']['changetitle'] = 'modified';
 $languagetext['edit']['changetext'] = 'The filling station was successfully altered';

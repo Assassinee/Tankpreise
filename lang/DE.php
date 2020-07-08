@@ -1,4 +1,13 @@
 <?php
+
+
+
+$languagetext['footer']['fuel'] = 'Benzinart';
+$languagetext['footer']['info'] = 'info';
+$languagetext['footer']['Diagram'] = 'Diagramm';
+$languagetext['footer']['DiagramWeek'] = 'DiagrammWoche';
+$languagetext['footer']['settings'] = 'Einstellung';
+
 $languagetext['edit']['title'] = 'bearbeiten';
 $languagetext['edit']['changetitle'] = 'geändert';
 $languagetext['edit']['changetext'] = 'Die Tankstelle wurde erfolgreich geänder';
