@@ -45,12 +45,20 @@ if(isset($_POST['submit'])) //Seite mit Karte & Tankstellen wird angezeigt
     $i = 1;
     foreach ($data as $key => $value)
     {
-        $add = "<input type='checkbox' name='tankstellenid[]' value='$value[id]'";
-        $picture = 'http://' . $domain . '/bilder/saule.png';
+        if ($value['isOpen'] != null)
+        {
+            $picture = 'http://' . $domain . '/bilder/saule.png';
 
-        $tabelle .= '<tr><td>' . $i . '</td><td>' . $value['id'] . '</td><td>' . $value['name']
-            . '</td><td>' . $value['adresse'] . ' </td><td>' . $value['entfernung'] . 'km</td><td>' . ($value['E5'] != null ? $value['E5'] . '€' : '-') . '</td></tr>';
+            $tabelle .= '<tr><td>' . $i . '</td><td>' . $value['id'] . '</td><td>' . $value['name']
+                . '</td><td>' . $value['adresse'] . ' </td><td>' . $value['entfernung'] . 'km</td><td>' . ($value['E5'] != null ? $value['E5'] . '€' : '-') . '</td></tr>';
+        }
+        else
+        {
+            $picture = 'http://' . $domain . '/bilder/saule_geschlossen.png';
 
+            $tabelle .= '<tr><td>' . $i . '</td><td>' . $value['id'] . '</td><td>' . $value['name']
+                . '</td><td>' . $value['adresse'] . ' </td><td>' . $value['entfernung'] . 'km</td><td>' . $languagetext['arround']['closed'] . '</td></tr>';
+        }
         $map->addMarker($value['lat'], $value['lng'], $i . ': ' . $value['name'] . ':' . $value['adresse'], $picture);
 
         $i++;

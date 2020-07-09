@@ -18,6 +18,7 @@ $languagetext['arround']['name'] = 'name';
 $languagetext['arround']['street'] = 'Street';
 $languagetext['arround']['distance'] = 'Distance';
 $languagetext['arround']['price'] = 'Price';
+$languagetext['arround']['closed'] = 'closed';
 
 $languagetext['edit']['title'] = 'edit';
 $languagetext['edit']['changetitle'] = 'modified';
