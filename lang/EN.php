@@ -96,3 +96,7 @@ $languagetext['modules']['telegram']['info1'] = 'The Current price for ';
 $languagetext['modules']['telegram']['info2'] = ' at <b>';
 $languagetext['modules']['telegram']['info3'] = '</b> is at ';
 $languagetext['modules']['telegram']['info4'] = '€';
+$languagetext['modules']['telegram']['location1'] = 'The Current price for ';
+$languagetext['modules']['telegram']['location2'] = ' at <b>';
+$languagetext['modules']['telegram']['location3'] = '</b> is at ';
+$languagetext['modules']['telegram']['location4'] = '€';

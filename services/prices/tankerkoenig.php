@@ -53,6 +53,7 @@ class Tankerkoenig implements Prices
             $station['E5'] = $gasStation['e5'];
             $station['E10'] = $gasStation['e10'];
             $station['Diesel'] = $gasStation['diesel'];
+            $station['isOpen'] = $gasStation['isOpen'];
 
             $stationData[] = $station;
         }

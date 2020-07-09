@@ -96,3 +96,7 @@ $languagetext['modules']['telegram']['info1'] = 'Der aktuelle Preis für ';
 $languagetext['modules']['telegram']['info2'] = ' bei <b>';
 $languagetext['modules']['telegram']['info3'] = '</b> liegt bei ';
 $languagetext['modules']['telegram']['info4'] = '€';
+$languagetext['modules']['telegram']['location1'] = 'Der aktuelle Preis für ';
+$languagetext['modules']['telegram']['location2'] = ' bei <b>';
+$languagetext['modules']['telegram']['location3'] = '</b> liegt bei ';
+$languagetext['modules']['telegram']['location4'] = '€';
