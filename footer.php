@@ -19,6 +19,9 @@
             <a href="index.php?site=info"><?php echo $languagetext['footer']['info']; ?></a>
         </li>
         <li>
+            <a href="index.php?site=arround"><?php echo $languagetext['footer']['arround']; ?></a>
+        </li>
+        <li>
             <a href="index.php?site=Diagramm"><?php echo $languagetext['footer']['Diagram']; ?></a>
         </li>
         <li>

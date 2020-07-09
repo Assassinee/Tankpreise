@@ -1,12 +1,31 @@
 <?php
-
-
-
 $languagetext['footer']['fuel'] = 'Benzinart';
 $languagetext['footer']['info'] = 'info';
+$languagetext['footer']['arround'] = 'Umkreis';
 $languagetext['footer']['Diagram'] = 'Diagramm';
 $languagetext['footer']['DiagramWeek'] = 'DiagrammWoche';
 $languagetext['footer']['settings'] = 'Einstellung';
+
+$languagetext['arround']['title'] = 'Umkreis';
+$languagetext['arround']['address'] = 'Adresse';
+$languagetext['arround']['city'] = 'Stadt';
+$languagetext['arround']['postcode'] = 'Postleitzahl';
+$languagetext['arround']['radius'] = 'Umkreis';
+$languagetext['arround']['search'] = 'suchen';
+$languagetext['arround']['nr'] = 'NR';
+$languagetext['arround']['id'] = 'TankstellenID';
+$languagetext['arround']['name'] = 'Name';
+$languagetext['arround']['street'] = 'Straße';
+$languagetext['arround']['distance'] = 'Entfernung';
+$languagetext['arround']['price'] = 'Preis';
+
+
+
+
+
+
+
+
 
 $languagetext['edit']['title'] = 'bearbeiten';
 $languagetext['edit']['changetitle'] = 'geändert';

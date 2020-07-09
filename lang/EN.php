@@ -1,13 +1,31 @@
 <?php
-
-
-
-
 $languagetext['footer']['fuel'] = 'fuel type';
 $languagetext['footer']['info'] = 'info';
+$languagetext['footer']['arround'] = 'arround';
 $languagetext['footer']['Diagram'] = 'Diagram';
 $languagetext['footer']['DiagramWeek'] = 'DiagramWeek';
 $languagetext['footer']['settings'] = 'Settings';
+
+$languagetext['arround']['title'] = 'arround';
+$languagetext['arround']['address'] = 'Address';
+$languagetext['arround']['city'] = 'City';
+$languagetext['arround']['postcode'] = 'Postcode';
+$languagetext['arround']['radius'] = 'radius';
+$languagetext['arround']['search'] = 'search';
+$languagetext['arround']['nr'] = 'NR';
+$languagetext['arround']['id'] = 'TankstellenID';
+$languagetext['arround']['name'] = 'name';
+$languagetext['arround']['street'] = 'Street';
+$languagetext['arround']['distance'] = 'Distance';
+$languagetext['arround']['price'] = 'Price';
+
+
+
+
+
+
+
+
 
 $languagetext['edit']['title'] = 'edit';
 $languagetext['edit']['changetitle'] = 'modified';

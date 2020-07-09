@@ -27,9 +27,9 @@ class GoogleMaps implements Map
         $this->markers .= "new google.maps.Marker({position: {lat: $lat, lng: $lng}, map: map, title: '$title', icon: '$icon'});";
     }
 
-    public function getMap(): string
+    public function getMap($breite = 50, $hoehe = 50): string
     {
-        return '<div style="margin-left: auto; margin-right: auto; height: 50%; width: 70%;"><div style="height: 100%;" id="map"></div></div>';
+        return '<div style="margin-left: auto; margin-right: auto; height: ' . $hoehe . '%; width: ' . $breite . '%;"><div style="height: 100%;" id="map"></div></div>';
     }
 
     public function getJS(): string
@@ -41,7 +41,7 @@ class GoogleMaps implements Map
                             center: {lat: $this->lat, lng: $this->lng},
                             zoom: 15
                         });
-                    
+                        
                         new google.maps.Marker({
                             position: {lat: $this->lat, lng: $this->lng},
                             map: map,
