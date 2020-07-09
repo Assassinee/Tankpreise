@@ -25,6 +25,7 @@ $language = 'DE';
 $availableLanguages = Array('DE' => NULL, 'EN' => NULL);
 $webseitenpasswort = 'tanken';
 $webseitenzugriff = 1; //1 = öffentlich; 0 = mit Passwort
+$defaultPetrolType = 'E5';
 
 //APi's
 $apiKey = Array();
