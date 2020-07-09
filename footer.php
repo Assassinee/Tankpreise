@@ -2,7 +2,7 @@
 <footer class="footer">
     <ul>
         <li class="benzinart">
-            <a href="#">Benzinart: <?php echo $BENZINART; ?></a>
+            <a href="#"><?php echo $languagetext['footer']['fuel']; ?>: <?php echo $BENZINART; ?></a>
             <ul>
                 <li>
                     <a href="<?php echo $_SERVER['REQUEST_URI'] ?>&benzinart=E5">E5</a>
@@ -16,16 +16,19 @@
             </ul>
         </li>
         <li>
-            <a href="index.php?site=info">info</a>
+            <a href="index.php?site=info"><?php echo $languagetext['footer']['info']; ?></a>
         </li>
         <li>
-            <a href="index.php?site=Diagramm">Diagramm</a>
+            <a href="index.php?site=arround"><?php echo $languagetext['footer']['arround']; ?></a>
         </li>
         <li>
-            <a href="index.php?site=DiagrammWoche">DiagrammWoche</a>
+            <a href="index.php?site=Diagramm"><?php echo $languagetext['footer']['Diagram']; ?></a>
         </li>
         <li>
-            <a href="index.php?site=Einstellung">Einstellung</a>
+            <a href="index.php?site=DiagrammWoche"><?php echo $languagetext['footer']['DiagramWeek']; ?></a>
+        </li>
+        <li>
+            <a href="index.php?site=Einstellung"><?php echo $languagetext['footer']['settings']; ?></a>
         </li>
     </ul>
 </footer>

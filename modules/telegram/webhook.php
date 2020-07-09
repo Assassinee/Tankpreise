@@ -34,6 +34,9 @@ if(in_array($update['message']['chat']['id'], $telegramConfig['users']))
             case 'diesel':
                 $typ = 'Diesel';
                 break;
+            default:
+                $typ = $defaultPetrolType;
+                break;
         }
 
         $price = floatval(str_replace(',', '.', $text[2]));
@@ -46,7 +49,8 @@ if(in_array($update['message']['chat']['id'], $telegramConfig['users']))
             . $languagetext['modules']['telegram']['confirm3']);
 
         $telegram->addNotification($user_id, $typ, $price);
-    } elseif(strpos($message, "/info") === 0) {
+    }
+    elseif(strpos($message, "/info") === 0) {
 
         $text = strtolower($update['message']['text']);
 
@@ -65,6 +69,9 @@ if(in_array($update['message']['chat']['id'], $telegramConfig['users']))
                 break;
             case 'diesel':
                 $typ = 'Diesel';
+                break;
+            default:
+                $typ = $defaultPetrolType;
                 break;
         }
 
@@ -87,17 +94,63 @@ if(in_array($update['message']['chat']['id'], $telegramConfig['users']))
 
         $price = $command->fetchAll();
 
+        $telegram = new Telegram();
+
+        if ($price != null)
+        {
+            $tankerkoenig = $servicesPrices[$services['Prices']];
+
+            $location = $tankerkoenig->getLocation($price[0]['TankstellenID']);
+
+            $telegram->sendMessage($user_id, $languagetext['modules']['telegram']['info1']
+                . $typ . $languagetext['modules']['telegram']['info2']
+                . $price[0]['Name'] . $languagetext['modules']['telegram']['info3']
+                . $price[0][$typ] . $languagetext['modules']['telegram']['info4']);
+
+            $telegram->sendVenue($user_id, $location['lat'], $location['lng'], $price[0]['Name'], $location['address']);
+        }
+        else
+        {
+            $telegram->sendMessage($user_id, $languagetext['modules']['telegram']['info5']);
+        }
+    }
+    elseif ($update["message"]['location'] != null) {
+
+        $lat = $update["message"]['location']['latitude'];
+        $lng = $update["message"]['location']['longitude'];
+        $BENZINART = 'E5';
+
         $tankerkoenig = $servicesPrices[$services['Prices']];
 
-        $location = $tankerkoenig->getLocation($price[0]['TankstellenID']);
+        $tankerkoenig->setData($lat, $lng, 5);
+
+        $gasstations = $tankerkoenig->getStations();
+        $gasstationsfilter = array();
+
+        foreach ($gasstations as $key => $value)
+        {
+            if ($value['isOpen'] != null && $value[$BENZINART] != null)
+            {
+                $gasstationsfilter[] = $value;
+            }
+        }
+
+        usort($gasstationsfilter, function($item1, $item2) use ($BENZINART) { return $item1[$BENZINART] <=> $item2[$BENZINART]; });
 
         $telegram = new Telegram();
 
-        $telegram->sendMessage($user_id, $languagetext['modules']['telegram']['info1']
-            . $typ . $languagetext['modules']['telegram']['info2']
-            . $price[0]['Name'] . $languagetext['modules']['telegram']['info3']
-            . $price[0][$typ] . $languagetext['modules']['telegram']['info4']);
+        if (count($gasstationsfilter) == 0)
+        {
+            $telegram->sendMessage($chatId, $languagetext['modules']['telegram']['location5']);
+        }
+        else
+        {
+            $telegram->sendMessage($chatId, $languagetext['modules']['telegram']['location1']
+                . $BENZINART . $languagetext['modules']['telegram']['location2']
+                . $gasstationsfilter[0]['name'] . $languagetext['modules']['telegram']['location3']
+                . $gasstationsfilter[0][$BENZINART] . $languagetext['modules']['telegram']['location4']);
 
-        $telegram->sendVenue($user_id, $location['lat'], $location['lng'], $price[0]['Name'], $location['address']);
+            $telegram->sendVenue($chatId, $gasstationsfilter[0]['lat'], $gasstationsfilter[0]['lng'], $gasstationsfilter[0]['name'], $gasstationsfilter[0]['adresse']);
+        }
     }
 }

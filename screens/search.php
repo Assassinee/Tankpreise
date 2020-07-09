@@ -131,7 +131,7 @@ elseif(isset($_POST['submit']))//Seite mit Karte & Tankstellen wird angezeigt
             . '</td><td>' . $value['adresse'] . ' </td><td>' . $value['entfernung'] . 'km</td><td>'
             . $add . '</td></tr>';
 
-        $map->addMarker($value['lat'], $value['lng'], $i . ':' . $value['name'] . ':' . $value['adresse'], $picture);
+        $map->addMarker($value['lat'], $value['lng'], $i . ': ' . $value['name'] . ':' . $value['adresse'], $picture);
 
         $i++;
     }

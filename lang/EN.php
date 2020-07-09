@@ -1,4 +1,25 @@
 <?php
+$languagetext['footer']['fuel'] = 'fuel type';
+$languagetext['footer']['info'] = 'info';
+$languagetext['footer']['arround'] = 'arround';
+$languagetext['footer']['Diagram'] = 'Diagram';
+$languagetext['footer']['DiagramWeek'] = 'DiagramWeek';
+$languagetext['footer']['settings'] = 'Settings';
+
+$languagetext['arround']['title'] = 'arround';
+$languagetext['arround']['address'] = 'Address';
+$languagetext['arround']['city'] = 'City';
+$languagetext['arround']['postcode'] = 'Postcode';
+$languagetext['arround']['radius'] = 'radius';
+$languagetext['arround']['search'] = 'search';
+$languagetext['arround']['nr'] = 'NR';
+$languagetext['arround']['id'] = 'TankstellenID';
+$languagetext['arround']['name'] = 'name';
+$languagetext['arround']['street'] = 'Street';
+$languagetext['arround']['distance'] = 'Distance';
+$languagetext['arround']['price'] = 'Price';
+$languagetext['arround']['closed'] = 'closed';
+
 $languagetext['edit']['title'] = 'edit';
 $languagetext['edit']['changetitle'] = 'modified';
 $languagetext['edit']['changetext'] = 'The filling station was successfully altered';
@@ -76,3 +97,9 @@ $languagetext['modules']['telegram']['info1'] = 'The Current price for ';
 $languagetext['modules']['telegram']['info2'] = ' at <b>';
 $languagetext['modules']['telegram']['info3'] = '</b> is at ';
 $languagetext['modules']['telegram']['info4'] = '€';
+$languagetext['modules']['telegram']['info5'] = 'No petrol stations were found at the moment.';
+$languagetext['modules']['telegram']['location1'] = 'The Current price for ';
+$languagetext['modules']['telegram']['location2'] = ' at <b>';
+$languagetext['modules']['telegram']['location3'] = '</b> is at ';
+$languagetext['modules']['telegram']['location4'] = '€';
+$languagetext['modules']['telegram']['location5'] = 'No petrol stations were found.';

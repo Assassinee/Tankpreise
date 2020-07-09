@@ -24,7 +24,7 @@ Diesen schreibt man einfach in den Chat.
 BOTNAME
 ```
 
-Darauf antwortet der Botfather wiederum mit:
+Darauf antwortet der BotFather wiederum mit:
 
 ```
 Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.
@@ -37,7 +37,7 @@ Am einfachsten ist es den Namen des Bot's zu nehmen und ein _bot anzuhängen.
 BOTNAME_BOT
 ```
 
-Darauf antwortet der Botfather mit:
+Darauf antwortet der BotFather mit:
 
 ```
 Done! Congratulations on your new bot. You will find it at t.me/<USERNAME>.
@@ -59,10 +59,10 @@ Als letzten schritt müssen noch alle User eingetragen werden,
 auf die Der Bot reagieren soll. Dafür benötigt man seine User-ID.
 
 ### Webhook einrichten:
-Damit der Bot vernünftig  arbeiten kann wird ein Webhook benötigt.
+Damit der Bot vernünftig arbeiten kann wird ein Webhook benötigt.
 Der Webhook verarbeitet die ankommenden Nachrichten des Bot's.
 
-Das Einrichten  ist sehr einfach. Es muss nur die URL aufgerufen werden und zwei Anpassungen  vorgenommen werden.
+Das Einrichten ist sehr einfach. Es muss nur die URL aufgerufen werden und zwei Anpassungen vorgenommen werden.
 Als erstes muss der APi-Key eingetragen werden und als zweites muss die URL zu der Webhook-Datei angegeben werden.
 
 ```
@@ -111,10 +111,19 @@ Durch das hinzufügen der Befehle schlägt Telegram die Befehle direkt bei der E
 Der Bot besitzt die folgenden Befehle:
 - ```/preisinfo [TYP] [Betrag]```
 - ```/info [TYP]```
+- ```[location]```
 
 #### /preisinfo [TYP] [Betrag]
-Durch diesen Befehl ist es möglich, dass der Bot einem eine Erinnerung sendet,
-wenn der angegebene Betrag erreicht oder unterschritten wird.
+Wenn dieser Befehl benutzt wird, wird der Bot eine Errinerung senden,
+wenn der Angegebende Benzinpreis bei einer der gespeicherten Tankstellen erreicht wurde.
+Es kann pro Benutzer nur eine Errinerung exestieren.
+Bei erneutem benutzen des Befehles, wird die alte Errinerung überschrieben.
+- TYP ist die Benzinart [E5, E10, Diesel]
+- Betrag ist der Preis in Euro
 
 #### /info [TYP]
-Durch diesen Befehl sendet der Bot einem den aktuell günstigsten Preis.
+Wenn dieser Befehl benutzt wird, antwortet der Bot mit dem Günstigsten Benzinpreis der gespeicherten Tankstellen.
+
+#### [location]
+Wenn der Bot einen Standort gesendet bekommt, sucht er in der Nähe (5km) nach der günstigsten Tankstelle
+und antwortet mit dieser Information.

@@ -39,7 +39,11 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
     }
 
     switch ($siteget) {
-
+        case 'arround':
+            $seite = 'screens/arround.php';
+            $webseittitel = $languagetext['arround']['title'];
+            $passwordrequired = false;
+            break;
         case 'Diagramm':
             $seite = 'screens/diagram.php';
             $webseittitel = $languagetext['diagram']['title'];

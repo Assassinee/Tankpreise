@@ -1,4 +1,25 @@
 <?php
+$languagetext['footer']['fuel'] = 'Benzinart';
+$languagetext['footer']['info'] = 'info';
+$languagetext['footer']['arround'] = 'Umkreis';
+$languagetext['footer']['Diagram'] = 'Diagramm';
+$languagetext['footer']['DiagramWeek'] = 'DiagrammWoche';
+$languagetext['footer']['settings'] = 'Einstellung';
+
+$languagetext['arround']['title'] = 'Umkreis';
+$languagetext['arround']['address'] = 'Adresse';
+$languagetext['arround']['city'] = 'Stadt';
+$languagetext['arround']['postcode'] = 'Postleitzahl';
+$languagetext['arround']['radius'] = 'Umkreis';
+$languagetext['arround']['search'] = 'suchen';
+$languagetext['arround']['nr'] = 'NR';
+$languagetext['arround']['id'] = 'TankstellenID';
+$languagetext['arround']['name'] = 'Name';
+$languagetext['arround']['street'] = 'Straße';
+$languagetext['arround']['distance'] = 'Entfernung';
+$languagetext['arround']['price'] = 'Preis';
+$languagetext['arround']['closed'] = 'geschlossen';
+
 $languagetext['edit']['title'] = 'bearbeiten';
 $languagetext['edit']['changetitle'] = 'geändert';
 $languagetext['edit']['changetext'] = 'Die Tankstelle wurde erfolgreich geänder';
@@ -76,3 +97,9 @@ $languagetext['modules']['telegram']['info1'] = 'Der aktuelle Preis für ';
 $languagetext['modules']['telegram']['info2'] = ' bei <b>';
 $languagetext['modules']['telegram']['info3'] = '</b> liegt bei ';
 $languagetext['modules']['telegram']['info4'] = '€';
+$languagetext['modules']['telegram']['info5'] = 'Aktuell wurden keine Tankstellen gefunden.';
+$languagetext['modules']['telegram']['location1'] = 'Der aktuelle Preis für ';
+$languagetext['modules']['telegram']['location2'] = ' bei <b>';
+$languagetext['modules']['telegram']['location3'] = '</b> liegt bei ';
+$languagetext['modules']['telegram']['location4'] = '€';
+$languagetext['modules']['telegram']['location5'] = 'Es wurden keine Tankstellen gefunden.';

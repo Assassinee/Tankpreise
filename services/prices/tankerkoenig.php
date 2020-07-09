@@ -50,6 +50,10 @@ class Tankerkoenig implements Prices
             $station['entfernung'] = $gasStation['dist'];
             $station['lat'] = $gasStation['lat'];
             $station['lng'] = $gasStation['lng'];
+            $station['E5'] = $gasStation['e5'];
+            $station['E10'] = $gasStation['e10'];
+            $station['Diesel'] = $gasStation['diesel'];
+            $station['isOpen'] = $gasStation['isOpen'];
 
             $stationData[] = $station;
         }
