@@ -19,14 +19,6 @@ $languagetext['arround']['street'] = 'Street';
 $languagetext['arround']['distance'] = 'Distance';
 $languagetext['arround']['price'] = 'Price';
 
-
-
-
-
-
-
-
-
 $languagetext['edit']['title'] = 'edit';
 $languagetext['edit']['changetitle'] = 'modified';
 $languagetext['edit']['changetext'] = 'The filling station was successfully altered';

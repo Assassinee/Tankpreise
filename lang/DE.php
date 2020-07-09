@@ -19,14 +19,6 @@ $languagetext['arround']['street'] = 'Straße';
 $languagetext['arround']['distance'] = 'Entfernung';
 $languagetext['arround']['price'] = 'Preis';
 
-
-
-
-
-
-
-
-
 $languagetext['edit']['title'] = 'bearbeiten';
 $languagetext['edit']['changetitle'] = 'geändert';
 $languagetext['edit']['changetext'] = 'Die Tankstelle wurde erfolgreich geänder';
