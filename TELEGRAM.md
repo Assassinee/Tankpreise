@@ -114,11 +114,16 @@ Der Bot besitzt die folgenden Befehle:
 - ```[location]```
 
 #### /preisinfo [TYP] [Betrag]
-Durch diesen Befehl ist es möglich, dass der Bot einem eine Erinnerung sendet,
-wenn der angegebene Betrag erreicht oder unterschritten wird.
+Wenn dieser Befehl benutzt wird, wird der Bot eine Errinerung senden,
+wenn der Angegebende Benzinpreis bei einer der gespeicherten Tankstellen erreicht wurde.
+Es kann pro Benutzer nur eine Errinerung exestieren.
+Bei erneutem benutzen des Befehles, wird die alte Errinerung überschrieben.
+- TYP ist die Benzinart [E5, E10, Diesel]
+- Betrag ist der Preis in Euro
 
 #### /info [TYP]
-Durch diesen Befehl sendet der Bot einem den aktuell günstigsten Preis.
+Wenn dieser Befehl benutzt wird, antwortet der Bot mit dem Günstigsten Benzinpreis der gespeicherten Tankstellen.
 
 #### [location]
-Durch das senden des aktuellen standorts, sendet der Bot den günstigsten Preis in der Nähe zurück.
+Wenn der Bot einen Standort gesendet bekommt, sucht er in der Nähe (5km) nach der günstigsten Tankstelle
+und antwortet mit dieser Information.
