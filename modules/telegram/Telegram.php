@@ -58,7 +58,7 @@ class Telegram implements Modules
 
         global $telegramConfig;
         $dom = new DOMDocument();
-        $dom->load('../../' . $telegramConfig['xmlfile']);
+        $dom->load($telegramConfig['xmlfile']);
 
         if ($dom->getElementsByTagName('Notifications')->length == 0)
         {
@@ -79,7 +79,7 @@ class Telegram implements Modules
 
         $dom->getElementsByTagName('Notifications')->item(0)->appendChild($newElement);
 
-        $dom->save('../../' . $telegramConfig['xmlfile']);
+        $dom->save($telegramConfig['xmlfile']);
     }
 
     private function checkprice()
