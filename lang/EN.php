@@ -1,4 +1,19 @@
 <?php
+$languagetext['install']['title'] = 'installieren';
+$languagetext['install']['header'] = 'Welcome at Tankpreise';
+$languagetext['install']['database'] = 'Databse';
+$languagetext['install']['typ'] = 'Typ';
+$languagetext['install']['ip'] = 'IP-Address';
+$languagetext['install']['username'] = 'Username';
+$languagetext['install']['pass'] = 'Password';
+$languagetext['install']['outher'] = 'outher';
+$languagetext['install']['petroltyp'] = 'Petrol Typ';
+$languagetext['install']['wppw'] = 'Website password';
+$languagetext['install']['status'] = 'Website status';
+$languagetext['install']['status1'] = 'public';
+$languagetext['install']['status2'] = 'with password';
+$languagetext['install']['send'] = 'save';
+
 $languagetext['footer']['fuel'] = 'fuel type';
 $languagetext['footer']['info'] = 'info';
 $languagetext['footer']['arround'] = 'arround';

@@ -8,7 +8,7 @@ class ModuleManager {
     public function __construct()
     {
         $this->modules = [
-            'Telegram' => new Telegram()
+            //'Telegram' => new Telegram()
         ];
     }
 

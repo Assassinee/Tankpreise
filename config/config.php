@@ -1,11 +1,11 @@
 <?php
 
 $dbConfig = Array();
-$dbConfig['Typ'] = 'mysql';
-$dbConfig['Database'] = '';
-$dbConfig['User'] = '';
-$dbConfig['Pass'] = '';
-$dbConfig['Host'] = '';
+$dbConfig['Typ'] = '<<DBTYP>>';
+$dbConfig['Database'] = '<<Database>>';
+$dbConfig['User'] = '<<User>>';
+$dbConfig['Pass'] = '<<Pass>>';
+$dbConfig['Host'] = '<<Host>>';
 
 //Diagram
 $diagramm['FarbstaerkeLinie'] = 1;
@@ -23,8 +23,8 @@ $benzinarten = [
 //rest
 $language = 'DE';
 $availableLanguages = Array('DE' => NULL, 'EN' => NULL);
-$webseitenpasswort = 'tanken';
-$webseitenzugriff = 1; //1 = öffentlich; 0 = mit Passwort
+$webseitenpasswort = '<<webseitenpasswort>>';
+$webseitenzugriff = '<<webseitenzugriff>>'; //1 = öffentlich; 0 = mit Passwort
 $defaultPetrolType = 'E5';
 
 //APi's

@@ -1,4 +1,8 @@
 <?php
+if (file_exists('installieren.php'))
+{
+    header('location: installieren.php');
+}
 session_start();
 require_once 'config/config.php';
 require_once 'lang/loadLang.php';
