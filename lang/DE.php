@@ -11,6 +11,7 @@ $languagetext['arround']['address'] = 'Adresse';
 $languagetext['arround']['city'] = 'Stadt';
 $languagetext['arround']['postcode'] = 'Postleitzahl';
 $languagetext['arround']['radius'] = 'Umkreis';
+$languagetext['arround']['location'] = 'Standort';
 $languagetext['arround']['search'] = 'suchen';
 $languagetext['arround']['nr'] = 'NR';
 $languagetext['arround']['id'] = 'TankstellenID';

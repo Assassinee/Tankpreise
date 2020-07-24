@@ -1,33 +1,47 @@
 <?php
-if(isset($_POST['submit'])) //Seite mit Karte & Tankstellen wird angezeigt
+if(isset($_POST['submit']) || (isset($_GET['lat']) && isset($_GET['lng']) && isset($_GET['radius']))) //Seite mit Karte & Tankstellen wird angezeigt
 {
     //include
     require_once 'services/Services.php';
 
-    //Post
-    $address = $_POST['adresse'];
-    $city = $_POST['stadt'];
-    $postcode = $_POST['plz'];
-    $radius = $_POST['radius'];
-
-    //Variablen
-    $addresstogether = $address . ', ' . $postcode . ' ' . $city;
-    $address = str_replace(' ', '%20', $address);
-
     $url = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
     $domain = substr($url, 0, strripos($url, '/'));
 
-    //Geocoding
-    $geocoding = $servicesGeocoding[$services['Geocoding']];
+    if(isset($_GET['lat']) && isset($_GET['lng']))
+    {
+        $lat = $_GET['lat'];
+        $lng = $_GET['lng'];
+        $radius = $_GET['radius'];
 
-    $geocoding->setAddress($address, $city, $postcode);
+        $addresstogether = $lat . ',' . $lng;
+    }
+    else
+    {
+        //Post
+        $address = $_POST['adresse'];
+        $city = $_POST['stadt'];
+        $postcode = $_POST['plz'];
+        $radius = $_POST['radius'];
 
-    $geocoding->calculateCoordinates();
+        //Variablen
+        $addresstogether = $address . ', ' . $postcode . ' ' . $city;
+        $address = str_replace(' ', '%20', $address);
+
+        //Geocoding
+        $geocoding = $servicesGeocoding[$services['Geocoding']];
+
+        $geocoding->setAddress($address, $city, $postcode);
+
+        $geocoding->calculateCoordinates();
+
+        $lat = $geocoding->getLat();
+        $lng = $geocoding->getLng();
+    }
 
     //Preise
     $tankpreise = $servicesPrices[$services['Prices']];
 
-    $tankpreise->setData($geocoding->getLat(), $geocoding->getLng(), $radius);
+    $tankpreise->setData($lat, $lng, $radius);
 
     $data = $tankpreise->getStations();
 
@@ -38,7 +52,7 @@ if(isset($_POST['submit'])) //Seite mit Karte & Tankstellen wird angezeigt
 
     $map = $servicesMap[$services['Map']];
 
-    $map->setData($geocoding->getLat(), $geocoding->getLng(), $addresstogether);
+    $map->setData($lat, $lng, $addresstogether);
 
     usort($data, function($item1, $item2) use ($BENZINART) { return $item1[$BENZINART] <=> $item2[$BENZINART]; });
 
@@ -101,6 +115,8 @@ else
                     </div>
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary">'.$languagetext['arround']['search'].'</button>
+                <button type="button" onclick="locationarround()" class="btn btn-warning">'.$languagetext['arround']['location'].'</button>
             </form>
-        </div>';
+        </div>
+        <script src="js/location.js"></script>';
 }
