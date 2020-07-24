@@ -36,7 +36,7 @@ $form = '<div id="tankstellehinzufuegen" >
                     <input type="text" class="form-control" name="tankstellenid" placeholder="TankstellenID">
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary mb-2">'.$languagetext['settings']['add'].'</button>
-                <button type="button" class="btn btn-primary mb-2" style="margin-left: 10px;" onclick="parent.location=\'index.php?site=suchen\'">'.$languagetext['settings']['search'].'</button>
+                <button type="button" class="btn btn-warning mb-2" style="margin-left: 10px;" onclick="parent.location=\'index.php?site=suchen\'">'.$languagetext['settings']['search'].'</button>
             </form>
          </div>';
 
