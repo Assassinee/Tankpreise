@@ -15,10 +15,13 @@ Tankpreise ist ein Projekt, um sich immer die aktuellen Benzinpreise anzeigen zu
             <img alt="Diagramm" src="Screenshots/Diagramm.png">
         </td>
         <td>
-            <img alt="Tankstellensuche" src="Screenshots/Tankstellensuche.png">
+            <img alt="Tankstellen" src="Screenshots/Umkreis.png">
         </td>
         <td>
             <img alt="Einstellungen" src="Screenshots/Einstellungen.png">
+        </td>
+        <td>
+            <img alt="Telegram" src="Screenshots/Telegram.png">
         </td>
     </tr>
 </table>
