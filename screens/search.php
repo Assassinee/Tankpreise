@@ -51,20 +51,10 @@ if(isset($_POST['submitsuche']))// ausgewaehlte Tankstellen werden hinzugefuegt
         header('location: index.php?site=Einstellung');
     }
 }
-elseif(isset($_POST['submit']))//Seite mit Karte & Tankstellen wird angezeigt
+elseif(isset($_POST['submit']) || (isset($_GET['lat']) && isset($_GET['lng']) && isset($_GET['radius'])))//Seite mit Karte & Tankstellen wird angezeigt
 {
     //include
     require_once 'services/Services.php';
-
-    //Post
-    $address = $_POST['adresse'];
-    $city = $_POST['stadt'];
-    $postcode = $_POST['plz'];
-    $radius = $_POST['radius'];
-
-    //Variablen
-    $addresstogether = $address . ', ' . $postcode . ' ' . $city;
-    $address = str_replace(' ', '%20', $address);
 
     $url = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
     $domain = substr($url, 0, strripos($url, '/'));
@@ -90,29 +80,53 @@ elseif(isset($_POST['submit']))//Seite mit Karte & Tankstellen wird angezeigt
         $gasStations[] = $value['TankstellenID'];
     }
 
-    //Geocoding
-    $geocoding = $servicesGeocoding[$services['Geocoding']];
+    if (isset($_GET['lat']) && isset($_GET['lng']))
+    {
+        $lat = $_GET['lat'];
+        $lng = $_GET['lng'];
+        $radius = $_GET['radius'];
 
-    $geocoding->setAddress($address, $city, $postcode);
+        $addresstogether = $lat . ',' . $lng;
+    }
+    else
+    {
+        //Post
+        $address = $_POST['adresse'];
+        $city = $_POST['stadt'];
+        $postcode = $_POST['plz'];
+        $radius = $_POST['radius'];
 
-    $geocoding->calculateCoordinates();
+        //Variablen
+        $addresstogether = $address . ', ' . $postcode . ' ' . $city;
+        $address = str_replace(' ', '%20', $address);
+
+        //Geocoding
+        $geocoding = $servicesGeocoding[$services['Geocoding']];
+
+        $geocoding->setAddress($address, $city, $postcode);
+
+        $geocoding->calculateCoordinates();
+
+        $lat = $geocoding->getLat();
+        $lng = $geocoding->getLng();
+    }
 
     //Preise
     $tankpreise = $servicesPrices[$services['Prices']];
 
-    $tankpreise->setData($geocoding->getLat(), $geocoding->getLng(), $radius);
+    $tankpreise->setData($lat, $lng, $radius);
 
     $data = $tankpreise->getStations();
 
     //Tabelle erstellen
-    $tabelle = '<div style="margin-left: auto; margin-right: auto; width: 70%;">
+    $tabelle = '<div style="margin-left: auto; margin-right: auto; width: 100%;">
                 <form action="' . $_SERVER['REQUEST_URI'] . '" method = "POST" target="_self" accept-charset="UTF-8">
                 <table class="table table-striped table-bordered table-hover">
                 <thead class="thead-dark"><tr><th>'.$languagetext['search']['nr'].'</th><th>'.$languagetext['search']['id'].'</th><th>'.$languagetext['search']['name'].'</th><th>'.$languagetext['search']['street'].'</th><th>'.$languagetext['search']['distance'].'</th><th>'.$languagetext['search']['add'].'</th></tr></thead>';
 
     $map = $servicesMap[$services['Map']];
 
-    $map->setData($geocoding->getLat(), $geocoding->getLng(), $addresstogether);
+    $map->setData($lat, $lng, $addresstogether);
 
     $i = 1;
     foreach ($data as $key => $value)
@@ -138,7 +152,7 @@ elseif(isset($_POST['submit']))//Seite mit Karte & Tankstellen wird angezeigt
 
     $tabelle .= '</table><button type="submit" name="submitsuche" class="btn btn-primary">'.$languagetext['search']['add'].'</button></form></div>';
 
-    echo $map->getMap();
+    echo $map->getMap(100, 70);
     echo $tabelle;
     echo $map->getJS();
 
@@ -173,6 +187,8 @@ elseif(isset($_POST['submit']))//Seite mit Karte & Tankstellen wird angezeigt
                     </div>
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary">'.$languagetext['search']['search'].'</button>
+                <button type="button" onclick="locationsearch()" class="btn btn-warning">'.$languagetext['search']['location'].'</button>
             </form>
-        </div>';
+        </div>
+        <script src="js/location.js"></script>';
 }

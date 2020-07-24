@@ -77,6 +77,7 @@ $languagetext['search']['city'] = 'City';
 $languagetext['search']['postcode'] = 'Postcode';
 $languagetext['search']['radius'] = 'radius';
 $languagetext['search']['search'] = 'search';
+$languagetext['search']['location'] = 'Location';
 $languagetext['search']['nr'] = 'NR';
 $languagetext['search']['id'] = 'TankstellenID';
 $languagetext['search']['name'] = 'name';
