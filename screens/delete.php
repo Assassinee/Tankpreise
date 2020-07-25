@@ -57,10 +57,12 @@ if(isset($_GET['id']))
 
         $tablelle .= '</table></div>';
 
-        $form = '">\'' .$languagetext['delete']['cancel'].'</button>
-                    <button type="button" class="btn btn-primary mb-2" style="margin-left: 10px;" onclick="parent.location=\'index.php?site=loeschen&id=' . $id . '&con=1' . '\'">'.$languagetext['delete']['delete'].'</button>
-                </form>
-             </div>';
+        $form = '<div id="tankstellehinzufuegen" >
+                    <form class="form-inline" action="delete.php" method = "GET" target="_self" accept-charset="UTF-8">
+                        <button type="button" class="btn btn-primary mb-2" style="margin-left: 10px;" onclick="parent.location=\'index.php?site=Einstellung\'">'.$languagetext['delete']['cancel'].'</button>
+                        <button type="button" class="btn btn-primary mb-2" style="margin-left: 10px;" onclick="parent.location=\'index.php?site=loeschen&id=' . $id . '&con=1' . '\'">'.$languagetext['delete']['delete'].'</button>
+                    </form>
+                </div>';
 
         echo $tablelle;
         echo $form;
