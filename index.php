@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'config/config.php';
+require_once 'config/sites.php';
 require_once 'lang/loadLang.php';
 
 $seite = '';
@@ -38,52 +39,17 @@ if($webseitenzugriff == 0 && $_SESSION['eingeloggt'] != true) {
         $siteget = $_GET['site'];
     }
 
-    switch ($siteget) {
-        case 'arround':
-            $seite = 'screens/arround.php';
-            $webseittitel = $languagetext['arround']['title'];
-            $passwordrequired = false;
-            break;
-        case 'Diagramm':
-            $seite = 'screens/diagram.php';
-            $webseittitel = $languagetext['diagram']['title'];
-            $passwordrequired = false;
-            break;
-        case 'DiagrammWoche':
-            $seite = 'screens/diagrammWoche.php';
-            $webseittitel = $languagetext['diagramwoche']['title'];
-            $passwordrequired = false;
-            break;
-        case 'Einstellung':
-            $seite = 'screens/settings.php';
-            $webseittitel = $languagetext['settings']['title'];
-            $passwordrequired = true;
-            break;
-        case 'suchen':
-            $seite = 'screens/search.php';
-            $webseittitel = $languagetext['search']['title'];
-            $passwordrequired = true;
-            break;
-        case 'bearbeiten':
-            $seite = 'screens/edit.php';
-            $webseittitel = $languagetext['edit']['title'];
-            $passwordrequired = true;
-            break;
-        case 'loeschen':
-            $seite = 'screens/delete.php';
-            $webseittitel = $languagetext['delete']['title'];
-            $passwordrequired = true;
-            break;
-        case 'login':
-            $seite = 'screens/login.php';
-            $webseittitel = $languagetext['login']['title'];
-            $passwordrequired = false;
-            break;
-        default:
-            $seite = 'screens/info.php';
-            $webseittitel = 'Info';
-            $passwordrequired = false;
-            break;
+    if (key_exists($siteget, $sites))
+    {
+        $seite = $sites[$siteget]['site'];
+        $webseittitel = $sites[$siteget]['title'];
+        $passwordrequired = $sites[$siteget]['password'];
+    }
+    else
+    {
+        $seite = $sites['default']['site'];
+        $webseittitel = $sites['default']['title'];
+        $passwordrequired = $sites['default']['password'];
     }
 
     //TODO: Notice: Undefined index: eingeloggt in /Users/max/website/tankpreise/index.php on line 85
