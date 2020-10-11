@@ -88,6 +88,14 @@ $languagetext['search']['mysqlerror'] = 'MYSQL Fehler';
 $languagetext['search']['error'] = 'Fehler';
 $languagetext['search']['errormsg'] = 'Es wurden keine Tankstellen ausgewählt';
 
+$languagetext['diagramweek'][1] = 'Mo';
+$languagetext['diagramweek'][2] = 'Di';
+$languagetext['diagramweek'][3] = 'Mi';
+$languagetext['diagramweek'][4] = 'Do';
+$languagetext['diagramweek'][5] = 'Fr';
+$languagetext['diagramweek'][6] = 'Sa';
+$languagetext['diagramweek'][7] = 'So';
+
 $languagetext['modules']['telegram']['confirm1'] = 'Ich werde dich bei einem Preis von ';
 $languagetext['modules']['telegram']['confirm2'] = '€ für ';
 $languagetext['modules']['telegram']['confirm3'] = ' errinnern.';
