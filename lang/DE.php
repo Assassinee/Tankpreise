@@ -113,3 +113,6 @@ $languagetext['modules']['telegram']['location2'] = ' bei <b>';
 $languagetext['modules']['telegram']['location3'] = '</b> liegt bei ';
 $languagetext['modules']['telegram']['location4'] = '€';
 $languagetext['modules']['telegram']['location5'] = 'Es wurden keine Tankstellen gefunden.';
+$languagetext['modules']['telegram']['daily1'] = 'Gestern lag der niedrigste Preis für ';
+$languagetext['modules']['telegram']['daily2'] = ' bei ';
+$languagetext['modules']['telegram']['daily3'] = '€.';

@@ -149,8 +149,101 @@ class Telegram implements Modules
         }
     }
 
+    private function getDailyLastUpdate() {
+
+        global $telegramConfig;
+        $lastUpdate = 0;
+        $dom = new DOMDocument();
+        $dom->load($telegramConfig['xmlfile']);
+
+        if ($dom->getElementsByTagName('DailyUpdate')->length == 0)
+        {
+            $dom->documentElement->appendChild($dom->createElement('DailyUpdate'));
+
+            $dom->save($telegramConfig['xmlfile']);
+        } else if ($dom->getElementsByTagName('DailyUpdate')->length == 1) {
+
+            $node = $dom->getElementsByTagName('DailyUpdate');
+            $nodes = $node->item(0)->childNodes;
+
+            if ($nodes->length >= 1) {
+
+                $lastUpdate = $nodes->item(0)->nodeValue;
+            }
+        }
+        return $lastUpdate;
+    }
+
+    private function setDailyLastUpdate($time) {
+
+        global $telegramConfig;
+        $dom = new DOMDocument();
+        $dom->load($telegramConfig['xmlfile']);
+
+        $node = $dom->getElementsByTagName('DailyUpdate');
+
+        if ($node->item(0)->childNodes->length >= 1) {
+
+            $node->item(0)->removeChild($node->item(0)->childNodes->item(0));
+        }
+
+        $node->item(0)->appendChild($dom->createElement('lastupdate', $time));
+
+        $dom->save($telegramConfig['xmlfile']);
+    }
+
+    private function dailyinfo() {
+
+        global $dbConfig;
+        global $languagetext;
+        global $telegramConfig;
+        $time = time();
+        $timeday = $time - strtotime("today");
+        $lastUpdate = $this->getDailyLastUpdate();
+
+        if ($lastUpdate < strtotime("today")) {
+
+            if ($timeday >= $telegramConfig['dailyinfo']['time']) {
+
+                $typ = $telegramConfig['dailyinfo']['type'];
+
+                try
+                {
+                    $db = new PDO($dbConfig['Typ'] . ':dbname=' . $dbConfig['Database'] . ';host=' . $dbConfig['Host'], $dbConfig['User'], $dbConfig['Pass']);
+                } catch (PDOException $e) {
+
+                    echo $e->getMessage();
+                    exit();
+                }
+
+                $sql = "SELECT min(E5) as '$typ' FROM `preise` where Zeit BETWEEN :time1 and :time2 and Status = 'open'";
+
+                $command = $db->prepare($sql);
+
+                $time1 = date('Y-m-d 00:00:00', strtotime("yesterday"));
+                $command->bindParam(':time1', $time1);
+
+                $time2 = date('Y-m-d 23:59:59', strtotime("yesterday"));
+                $command->bindParam(':time2', $time2);
+
+                $command->execute();
+
+                $price = $command->fetchAll()[0]['E5'];
+
+                foreach ($telegramConfig['dailyinfo']['users'] as $userID) {
+
+                    $this->sendMessage($userID, $languagetext['modules']['telegram']['daily1'] . $typ
+                        . $languagetext['modules']['telegram']['daily2'] . $price
+                        . $languagetext['modules']['telegram']['daily3']);
+                }
+                $this->setDailyLastUpdate($time);
+            }
+        }
+    }
+
     public function run(): void
     {
         $this->checkprice();
+        $this->dailyinfo();
     }
 }
