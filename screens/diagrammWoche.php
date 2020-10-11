@@ -156,8 +156,11 @@ $labels = '';
 
 foreach ($tankpreise as $preise => $value)
 {
-    $temp = date('d.m.Y G:i', $preise);
-    $labels .= "'$temp',";
+    $temp = date('d.m G:i', $preise);
+
+    $day = $languagetext['diagramweek'][date('N', $preise)];
+
+    $labels .= "'$day $temp',";
 }
 ?>
 <div class="Diagramm">
