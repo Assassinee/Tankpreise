@@ -113,3 +113,6 @@ $languagetext['modules']['telegram']['location2'] = ' at <b>';
 $languagetext['modules']['telegram']['location3'] = '</b> is at ';
 $languagetext['modules']['telegram']['location4'] = '€';
 $languagetext['modules']['telegram']['location5'] = 'No petrol stations were found.';
+$languagetext['modules']['telegram']['daily1'] = 'Yesterday was the lowest price for ';
+$languagetext['modules']['telegram']['daily2'] = ' at ';
+$languagetext['modules']['telegram']['daily3'] = '€.';
