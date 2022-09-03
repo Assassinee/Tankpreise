@@ -15,6 +15,24 @@ if(isset($_GET['id']))
 
     if(isset($_GET['con']) && $_GET['con'] == 1)
     {
+        $sql = 'DELETE From preise where TankstellenID = :id';
+
+        $command = $db->prepare($sql);
+
+        $command->bindParam(':id', $id);
+
+        $command->execute();
+
+        $command->errorInfo();
+
+        if($error = $command->errorInfo()[0] != 0)
+        {
+            $_SESSION['Fehler']['Titel'] = $languagetext['delete']['mysqlerror'];
+            $_SESSION['Fehler']['Meldung'] = $mysqli->error;
+            header('location: index.php?site=Einstellung');
+        }
+
+
         $sql = 'DELETE From tankstellen where TankstellenID = :id';
 
         $command = $db->prepare($sql);

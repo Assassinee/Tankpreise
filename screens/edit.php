@@ -83,8 +83,8 @@ if(isset($_GET['id']))
         $table .= '<tr><td>' . $id . '</td><td><input type="text" name="tsname" value="' . $name
             . '" class="form-control"></td><td><table><tr><td>#Hex</td><td>RGB</td></tr><tr><td><input '
             . 'class="jscolor" value="' . $colorHEX . '" onfocusout="hextoRGB()" id="feldHEX"></td><td>'
-            . '<input type="text" onfocusout="rgbToHEX()" name="feldRGB" id="feldRGB" value="' . $color
-            . '"></td></tr></table></div></td><td><input type="text" name="tsbesch" value="' . $description
+            . '<input type="text" onfocusout="rgbToHEX()" name="fieldRGB" id="feldRGB" value="' . $color
+            . '"></td></tr></table></div></td><td><input type="text" name="tsdesc" value="' . $description
             . '" class="form-control" style="width: 350px;"></td></tr>';
 
         $table .= '</table></div>';

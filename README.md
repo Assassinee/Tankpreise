@@ -62,7 +62,7 @@ Es ist möglich die Funktionalität der Anwenung durch Module zu erweitern.
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/Assassinee/Tankpreise)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Assassinee/Tankpreise)
 
-Wenn du eine gute Idee für die Webanwenung hast, hilf gerne bei der Entwicklung mit.
+Wenn du eine gute Idee für die Webanwendung hast, hilf gerne bei der Entwicklung mit.
 
 ## Autor
 - [Maximilian Kosowski (Assassinee)](https://github.com/Assassinee)
